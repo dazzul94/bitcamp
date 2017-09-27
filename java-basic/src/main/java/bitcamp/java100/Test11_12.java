@@ -13,6 +13,6 @@ public class Test11_12 {
         System.out.println("");
         System.out.println(" ");  
 
-        // System.out.println(''); 
+        // System.out.println(''); 작은 따옴표안에는 아무것도 없으면 error
            }
     }
