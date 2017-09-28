@@ -1,20 +1,16 @@
 public class App {
 
     public static void main(String[] args) {
-        //변수를 선언
-        String name = "홍길동";
-        int kor = 100;
-        int eng = 97;
-        int math = 98;
-        int sum = kor + eng + math ;
-        float aver = sum/3.0f;
+        String [] names = {"홍길동", "임꺽정", "유관순"};
+        int [] kor = {100, 80, 80};
+        int [] eng = {90,80,100};
+        int [] math ={80,80,100};
 
-        System.out.printf("이름: %s\n", name);
-        System.out.printf("국어: %d\n", kor);
-        System.out.printf("영어: %d\n", eng);
-        System.out.printf("수학: %d\n", math);
-        System.out.printf("총점: %d\n", sum);
-        System.out.printf("평균: %.1f\n", aver);
 
-       }
+        for (int i =0 ; i < names.length ; i++){
+            int sum = kor[i] + eng [i] + math [i];
+            float aver = sum / 3.0f;
+            System.out.printf("%-4s, %4d, %4d, %4d, %4d, %6.1f\n", names[i], kor[i], eng[i], math[i], sum, aver);
+        }
+    }
 }
