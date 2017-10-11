@@ -2,7 +2,7 @@ package bitcamp.java100;
 
 public class Test15_11_1{
     public static void main(String[] args) {
-    //비트연산자(& ,| ,~ , ^) 응용
+    //비트연산자(& ,| ,~ , ^) 응용1 (class사용)
     class Privilege {
         boolean isDirectory;
         boolean ownerRead;
@@ -46,5 +46,7 @@ public class Test15_11_1{
         System.out.print(p1.otherExe ? "x" :"-");
         System.out.println();
         
+        //장점: 가독성 높다
+        //단점: 메모리 낭비 boolean 개별적이어서 4바이트
     }
 }
