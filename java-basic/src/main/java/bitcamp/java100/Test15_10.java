@@ -3,7 +3,7 @@ public class Test15_10{
     public static void main(String[] args) {
     //비트연산자(& ,| ,~ , ^)
         int v1 = 0b0101_1100;
-        int v2 = 0b0110_0110;
+        int v2 = 0b0110_0110; 
         
         
         //&(논리곱 AND)
