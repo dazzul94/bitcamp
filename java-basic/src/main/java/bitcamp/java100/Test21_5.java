@@ -13,7 +13,7 @@ public class Test21_5 {
            System.err.println("콘솔을 지원하지 않습니다");
            System.exit(1); //JVM을 종료한다
            
-           String fuck = console.readLine("구구단? ");
+           String fuck = console.readLine("구구단?");
 //           break;
 //           for (int x = i, y = 1;y <= 9;y++) {
 //               System.out.printf("%d * %d = %d\n", x, y, x * y);
@@ -25,6 +25,5 @@ public class Test21_5 {
 //                   System.out.println("다음에 또 봐요!");
 
            }
-           
     }
 }
