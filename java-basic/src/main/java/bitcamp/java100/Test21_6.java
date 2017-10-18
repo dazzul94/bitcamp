@@ -1,3 +1,18 @@
+// ## 키보드로부터 입력 받기 - 연습2
+// - 다음과 같이 사용자로부터 숫자를 입력 받아 각 숫자의 개수를 세시오.
+// - 실행 예) 
+// 숫자? 23347651
+// 0 = 0
+// 1 = 1
+// 2 = 1
+// 3 = 2
+// 4 = 1
+// 5 = 1
+// 6 = 1
+// 7 = 1
+// 8 = 0
+// 9 = 0
+// > 
 package bitcamp.java100;
 
 import java.io.Console;
@@ -5,31 +20,22 @@ import java.io.Console;
 public class Test21_6 {
     
     public static void main(String[] args) {
-        Console console1 = System.console();
-        if (console1 == null) {
+        Console console = System.console();
+        if (console == null) {
             System.err.println("콘솔을 지원하지 않습니다");
             System.exit(1); //JVM을 종료한다
         }
-        
-        int i1 = Integer.parseInt(console1.readLine("구구단? "));
-        for (int x = i1, y = 1;y <= 9;y++) {
-            System.out.printf("%d * %d = %d\n", x, y, x * y);
+        int i = Integer.parseInt(console.readLine("숫자? "));
+        int[] count = new int[10];
+        while (i > 0) {
+            count[i % 10]++;
+            i /= 10;
         }
-        
-        System.out.println("---------------------------------");
-        
-        Console console2 = System.console();
-        if (console2 == null) {
-            System.err.println("콘솔을 지원하지 않습니다");
-            System.exit(1); //JVM을 종료한다
+        int x = 0;
+        while (x < count.length) {
+            System.out.printf("%d = %d\n", x, count[x]);
+            x++;
         }
-        
-        int i2 = Integer.parseInt(console2.readLine("구구단? "));
-                if(i2 == 10) {
-                    System.out.println("2에서 9단까지만 가능합니다");
-                } else if(i2 == 1) { 
-                    System.out.println("2에서 9단까지만 가능합니다");
-                } else if(i2 == 0 || i2 < 0)
-                    System.out.println("다음에 또 봐요!");
-                }
+            
+    }
 }      
