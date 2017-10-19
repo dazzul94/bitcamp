@@ -9,7 +9,7 @@ package bitcamp.java100;
 
 import java.io.Console;
 
-public class Test21_7 {
+public class Test21_7_My {
     
     public static void main(String[] args) {
         Console console = System.console();
