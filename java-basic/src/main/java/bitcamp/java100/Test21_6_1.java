@@ -2,7 +2,7 @@ package bitcamp.java100;
 
 import java.io.Console;
 
-public class Test21_6 {
+public class Test21_6_1 {
 
     public static void main(String[] args) {
         // 콘솔 객체를 준비한다.
@@ -13,16 +13,19 @@ public class Test21_6 {
             System.exit(1); // JVM을 종료한다.
         }
         
-        StringBuffer buf = new StringBuffer(console.readLine("숫자? "));
+        long value = Long.parseLong(console.readLine("숫자? "));
         
         int[] cnt = new int[10];
         
-        for (int i = 0; i < buf.length(); i++) {
-            cnt[buf.charAt(i) - '0']++;
+        while (value > 0) {
+            cnt[(int)(value % 10)]++;
+            value /= 10;
         }
         
-        for (int i = 0; i < cnt.length; i++) {
-            System.out.printf("%d = %d\n", i, cnt[i]);
+        int x = 0;
+        while (x < cnt.length) {
+            System.out.printf("%d = %d\n", x, cnt[x]);
+            x++;
         }
         
     }

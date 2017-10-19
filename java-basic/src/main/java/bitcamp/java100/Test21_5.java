@@ -36,10 +36,7 @@ public class Test21_5 {
                     System.out.printf("%d * %d = %d\n", a, b, a * b);
             } 
             continue;
-        } else if (gugu == 10) {
-            System.out.println("2에서 9단까지만 가능합니다"); 
-            continue;
-        } else if (gugu == 1) {
+        } else if ((gugu >= 10) || (gugu == 1)) {
             System.out.println("2에서 9단까지만 가능합니다"); 
             continue;
         } else if (gugu <= 0) System.out.println("다음에 또 봐요!");
