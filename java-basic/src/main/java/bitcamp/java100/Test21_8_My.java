@@ -35,7 +35,7 @@ package bitcamp.java100;
 import java.io.Console;
 import java.util.ArrayList;
 
-public class Test21_8 {
+public class Test21_8_My {
     static class User {
         String name;
         String email;
@@ -79,4 +79,4 @@ public class Test21_8 {
             System.out.println(a);
         }
     }
-}      
+}   
