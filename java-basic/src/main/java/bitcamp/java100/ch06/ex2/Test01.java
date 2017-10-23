@@ -6,6 +6,10 @@ public class Test01 {
         
         static Console console;
         
+        static Score[] scores = new Score[10000];
+        
+        static int cursor;
+        
         static void prepareConsole() {
             console = System.console();
             if (console == null) {
