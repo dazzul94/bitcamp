@@ -28,7 +28,7 @@ public class Test01 {
         }
         
         static void printScore(Score score) {
-            System.out.printf("%10s, %3d, %3d, %3d, %3d, %5.2f", 
+            System.out.printf("%10s, %3d, %3d, %3d, %3d, %5.2f\n", 
                     score.name,
                     score.kor,
                     score.eng,
@@ -36,14 +36,45 @@ public class Test01 {
                     score.sum,
                     score.aver);
         }
+        static void add(Score score) {
+            if (cursor == scores.length) {
+                System.err.println("최대 저장개수를 초과하였습니다.");
+                return;
+            }
+            scores[cursor++] = score;
+        }
+        static int size() {
+            return cursor;
+        }
+        static Score get(int index) {
+            if (index < 0 || index >= cursor) {
+                return null;
+            }
+            return scores[index];
+          
+        }
+        static boolean confirm(String message) {
+            String response = console.readLine(message).toLowerCase();
+            
+            if (response.equals("y") || response.equals("yes")) {
+                return true;
+            }
+            return false;
+        }
         public static void main(String[] args) {
         prepareConsole();
+        
+        while(true) {
         
         Score score = new Score();
         
         inputScore(score);
         
-        printScore(score);
-
+        add(score);
+        
+        for(int i = 0; i < size(); i++) {
+        printScore(get(i));
+        }
     }
+        }
 }
