@@ -1,0 +1,18 @@
+package bitcamp.java100.ch07.ex1;
+
+public class Test04 {
+    public static void main(String[] args) {
+        
+        Calculator calc = new Calculator();
+        calc.result = 1;
+        calc.multiple(10);
+        calc.multiple(17);
+
+        calc.divide(0);
+        
+        calc.multiple(17);
+        
+        System.out.println(calc.result);
+    }
+
+}
