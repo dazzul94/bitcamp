@@ -1,10 +1,10 @@
 import java.util.Scanner;
 
 public class Score {
-    String name;
-    int[] subjects;
-    int sum;
-    float aver;
+    protected String name;
+    protected int[] subjects;
+    protected int sum;
+    protected float aver;
 
     
 void input() {
