@@ -6,11 +6,11 @@ apply plugin: 'eclipse'
 eclipse {
   jdt { 
   //gradle에게 jdk 1.9가 아닌 9으로 이름 바꾸게 함
-    sourceCompatibility = 9
-    targetCompatibility = 9
-    javaRuntimeName = "JavaSE-9"
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    javaRuntimeName = "JavaSE-1.8"
 
-    file {
+  /* file {
       whenMerged { jdt
       }
 
@@ -21,6 +21,7 @@ eclipse {
       properties["org.eclipse.jdt.core.compiler.compliance"] = "9"
       }
     }
+    */
   }
 }
 
