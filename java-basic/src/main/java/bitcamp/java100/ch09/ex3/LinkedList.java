@@ -11,7 +11,7 @@ public class LinkedList {
         Box next;
     }
     
-    Box head;
+    Box head; //null이 기본적으로 우리가 필요한 유효한 값
     Box tail;
 
     int len;
