@@ -1,3 +1,4 @@
+package Mycode;
 import java.util.Scanner;
 
 public class Score2 {  

@@ -1,8 +1,3 @@
-//: ## 캡슐화 적용
-//: - 모든 필드에 대해 외부 접근을 차단한다.
-//:   단 자식 클래스에서는 직접 접근할 수 있게 허락한다.
-//: 
-
 import java.util.Scanner;
 
 public class Score {   
@@ -79,7 +74,7 @@ public class Score {
             math = Integer.parseInt(keyScan.nextLine());
         } catch (Exception e){}
         
-        if (confirm2("변경하시겠습니까?(y/N) ")) {
+        if (Prompts.confirm2("변경하시겠습니까?(y/N) ")) {
             this.subjects[0] = kor;
             this.subjects[1] = eng;
             this.subjects[2] = math;
@@ -89,22 +84,9 @@ public class Score {
             System.out.println("변경을 취소하였습니다");
         }
         //엔터치면 기본값 만들기
-        
-        
-        
     }
 
-    static boolean confirm2(String message) {
-        Scanner keyScan = new Scanner(System.in);
-        System.out.print(message);
-        String response = keyScan.nextLine().toLowerCase();
-
-        if (response.equals("n") || response.equals("no") || 
-                response.equals("")) {
-            return false;
-        }
-        return true;
-    }
+   
     
     public void printDetail() {
         System.out.printf("%-4s, %4d, %4d, %4d, %4d, %6.1f\n",  
