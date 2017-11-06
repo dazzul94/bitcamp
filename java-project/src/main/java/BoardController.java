@@ -7,6 +7,17 @@ public class BoardController {
     static Scanner keyScan = new Scanner(System.in);
     private ArrayList<Board> list = new ArrayList<>();
 
+    private Board findByNum(int num) {
+        Iterator<Board> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            Board board = iterator.next();
+            if (board.num == num) 
+                return board;
+        }
+        return null;
+
+    }
+
 
     public void execute() {
         loop:
@@ -43,16 +54,7 @@ public class BoardController {
         Board board = new Board(); 
         board.input();
 
-        boolean isExist = false;
-        Iterator<Board> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            if (iterator.next().num == board.num) {
-                isExist = true;
-                break;
-            }
-        }
-
-        if (isExist) {
+        if (findByNum(board.getNum()) != null) {
             System.out.println("이미 등록된 게시물입니다.");
         } else {
             list.add(board);
@@ -64,15 +66,7 @@ public class BoardController {
         System.out.println("[게시물 상세 정보]");
         int num = Integer.parseInt(Prompts.input("번호? "));
 
-        Board board = null;
-        Iterator<Board> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            Board temp = iterator.next();
-            if (temp.num == num) {
-                board = temp;
-                break;
-            }
-        }
+        Board board = findByNum(num);
 
         if (board == null) {
             System.out.printf("%d번 게시물이 없습니다.\n", num);
@@ -85,15 +79,7 @@ public class BoardController {
         System.out.println("[게시물 삭제]");
         int num = Integer.parseInt(Prompts.input("번호? "));
 
-        Board board = null;
-        Iterator<Board> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            Board temp = iterator.next();
-            if (temp.num == num) {
-                board = temp;
-                break;
-            }
-        }
+        Board board = findByNum(num);
 
         if (board == null) {
             System.out.printf("%d번 게시물이 없습니다.\n", num);
@@ -104,22 +90,14 @@ public class BoardController {
             } else {
                 System.out.println("삭제를 취소하였습니다.");
             }
-            }
         }
+    }
 
     private void doUpdate() {
         System.out.println("[게시물 변경]");
         int num = Integer.parseInt(Prompts.input("번호? "));
 
-        Board board = null;
-        Iterator<Board> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            Board temp = iterator.next();
-            if (temp.num == num) {
-                board = temp;
-                break;
-            }
-        }
+        Board board = findByNum(num);
 
         if (board == null) {
             System.out.printf("%d번 게시물이 없습니다.\n", num);

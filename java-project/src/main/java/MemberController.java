@@ -8,6 +8,17 @@ public class MemberController {
     
     private ArrayList<Member> list = new ArrayList<>();
     
+    private Member findByEmail(String email) {
+        Iterator<Member> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            Member member = iterator.next();
+            if (member.email.equals(email)) {
+                return member;
+            }
+        }
+        return null;// 반복문을 다 돌아도 못찾았으면 null을 리턴한다
+    }
+    
     public void execute() {
         loop:
         while (true) {
@@ -44,16 +55,9 @@ public class MemberController {
         member = new Member(); 
         member.input();
         
-        boolean isExist = false;
-        Iterator<Member> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            if (iterator.next().email.equals(member.email)) {
-                isExist = true;
-                break;
-            }
-        }
         
-        if (isExist) {
+        
+        if (findByEmail(member.getEmail()) != null) {
             System.out.println("이미 등록된 이메일입니다.");
         } else {
             list.add(member);
@@ -65,15 +69,7 @@ public class MemberController {
         System.out.println("[회원 상세 정보]");
         String email = Prompts.input("이메일? ");
         
-        Member member = null;
-        Iterator<Member> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            Member temp = iterator.next();
-            if (temp.email.equals(email)) {
-                member = temp;
-                break;
-            }
-        }
+        Member member = findByEmail(email);
         
         if (member == null) {
             System.out.printf("'%s'의 회원 정보가 없습니다.\n", email);
@@ -86,15 +82,7 @@ public class MemberController {
         System.out.println("[회원 변경]");
         String email = Prompts.input("이메일? ");
         
-        Member member = null;
-        Iterator<Member> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            Member temp = iterator.next();
-            if (temp.email.equals(email)) {
-                member = temp;
-                break;
-            }
-        }
+        Member member = findByEmail(email);
         
         if (member == null) {
             System.out.printf("'%s'의 회원 정보가 없습니다.\n", email);
@@ -107,15 +95,7 @@ public class MemberController {
         System.out.println("[회원 삭제]");
         String email = Prompts.input("이메일? ");
         
-        Member member = null;
-        Iterator<Member> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            Member temp = iterator.next();
-            if (temp.email.equals(email)) {
-                member = temp;
-                break;
-            }
-        }
+        Member member = findByEmail(email);
         
         if (member == null) {
             System.out.printf("'%s'의 회원 정보가 없습니다.\n", email);
