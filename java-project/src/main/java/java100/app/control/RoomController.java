@@ -1,14 +1,18 @@
 package java100.app.control;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Scanner;
 
-import java100.app.domain.Member;
 import java100.app.domain.Room;
 import java100.app.util.Prompts;
 
-public class RoomController extends GenericController<Room> {
+public class RoomController extends ArrayList<Room> implements Controller {
+    Scanner keyScan = new Scanner(System.in);
+    
+    
     //Member를 다루는 수퍼클래스를 상속
     private Room find(String name) {
-        Iterator<Room> iterator = list.iterator();
+        Iterator<Room> iterator = this.iterator();
         while (iterator.hasNext()) {
             Room room = iterator.next();
             if (room.getName().equals(name)) {
@@ -17,6 +21,8 @@ public class RoomController extends GenericController<Room> {
         }
         return null;// 반복문을 다 돌아도 못찾았으면 null을 리턴한다
     }
+    
+    
     @Override
     public void execute() {
         loop:
@@ -39,7 +45,7 @@ public class RoomController extends GenericController<Room> {
     private void doList() {
         System.out.println("[강의실 목록]");
 
-        Iterator<Room> iterator = list.iterator();
+        Iterator<Room> iterator = this.iterator();
         while (iterator.hasNext()) {
             Room room = iterator.next();
             System.out.printf("%s, %s, %d\n",  
@@ -65,7 +71,7 @@ public class RoomController extends GenericController<Room> {
         room.setLocation(Prompts.inputString("지역? "));
         room.setCapacity(Prompts.inputInt("수용인원? "));
 
-        list.add(room);
+        this.add(room);
 
     } 
 
@@ -81,7 +87,7 @@ public class RoomController extends GenericController<Room> {
         }
         
         if (Prompts.confirm2("정말 삭제하시겠습니까?(y/N) ")) {
-            list.remove(room);
+            this.remove(room);
             System.out.println("삭제하였습니다.");
         } else {
             System.out.println("삭제를 취소하였습니다.");
