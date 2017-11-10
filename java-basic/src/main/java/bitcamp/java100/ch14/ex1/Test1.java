@@ -1,4 +1,4 @@
-package ex1;
+package bitcamp.java100.ch14.ex1;
 
 import java.io.File;
 import java.sql.Date;
