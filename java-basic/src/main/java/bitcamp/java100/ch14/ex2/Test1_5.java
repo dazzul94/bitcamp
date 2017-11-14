@@ -1,12 +1,20 @@
-// 파일 읽기: FileInputStream 사용법 - 버퍼 사용 전
+// 파일 읽기: FileInputStream 사용법 - MyBufferedInputStream2 사용 
 
 package bitcamp.java100.ch14.ex2;
 
 import java.io.FileInputStream;
 
-public class Test1_2 {
+public class Test1_5 {
     public static void main(String[] args) throws Exception {
+        
         FileInputStream in = new FileInputStream("sample/jls9.pdf");
+        //ByteArrayInputStream in = new ByteArrayInputStream();
+        //Socket s = new Socket("www.daum.net", 80);
+        //InputStream in = s.getInputStream();
+        
+        // MyBufferedInputStream2는 FileInputStream을 이용하여
+        // 파일 입력을 처리한다.
+        MyBufferedInputStream2 in2 = new MyBufferedInputStream2(in);
         
         int count = 0;
         int b = 0;
@@ -15,7 +23,7 @@ public class Test1_2 {
         // 읽기 시작 시간을 저장한다.
         long start = System.currentTimeMillis();
         
-        while ((b = in.read()) != -1) {
+        while ((b = in2.read()) != -1) {
             count++;
         }
         

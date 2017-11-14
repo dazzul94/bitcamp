@@ -1,12 +1,13 @@
-// 파일 읽기: FileInputStream 사용법 - 버퍼 사용 전
+// 파일 읽기: FileInputStream 사용법 - MyBufferedInputStream 사용 
 
 package bitcamp.java100.ch14.ex2;
 
-import java.io.FileInputStream;
-
-public class Test1_2 {
+public class Test1_4 {
     public static void main(String[] args) throws Exception {
-        FileInputStream in = new FileInputStream("sample/jls9.pdf");
+        // FileInputStream을 직접 사용하는 대신
+        // 버퍼 기능이 추가된 클래스를 사용하여 데이터를 읽어보자!
+        MyBufferedInputStream in = 
+                new MyBufferedInputStream("sample/jls9.pdf");
         
         int count = 0;
         int b = 0;
