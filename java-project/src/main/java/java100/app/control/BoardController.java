@@ -14,56 +14,57 @@ import java100.app.util.Prompts;
 
 public class BoardController extends GenericController<Board> {
     
-    // 실제 이 클래스가 오버라이딩 하는 메서드는 
-    // GenericController가 따른다고 한 Controller 인터페이스의 
-    // 추상 메서드이다.
     private String dataFilePath;
-
+    
     public BoardController(String dataFilePath) {
         this.dataFilePath = dataFilePath;
         this.init();
-
     }
     
     @Override
     public void destroy() {
-
+        
         try (PrintWriter out = new PrintWriter(
-                                new BufferedWriter(
-                                  new FileWriter(this.dataFilePath)))) {
+                new BufferedWriter(
+                        new FileWriter(this.dataFilePath)))) {
             for (Board board : this.list) {
                 out.println(board.toCSVString());
             }
+            // 버퍼에 남은 찌꺼기를 마저 출력한다.
+            // => 물론 close()가 호출되도 버퍼에 남은 찌꺼기가 출력될 것이다.
+            // => 그래도 가능한 명시적으로 출력하자!
             out.flush();
-            out.close();//해도 찌꺼기 처리된다
+            
         } catch (IOException e) {
             e.printStackTrace();
+            
         }
     }
     
-    // CSV 형식으로 저장된 파일에서 성적 데이터를 읽어 
-    // ArrayList에 보관한다.
     @Override
     public void init() {
         
         try (BufferedReader in = new BufferedReader(
-                                    new FileReader(this.dataFilePath));) {
+                new FileReader(this.dataFilePath));) {
             
             String csv = null;
             while ((csv = in.readLine()) != null) {
                 try {
-                list.add(new Board(csv));
+                    list.add(new Board(csv));
                 } catch (CSVFormatException e) {
-                    System.out.println("CSV 데이터 형식 오류!");
+                    System.err.println("CSV 데이터 형식 오류!");
                     e.printStackTrace();
                 }
             }
+            
             
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+    // 실제 이 클래스가 오버라이딩 하는 메서드는 
+    // GenericController가 따른다고 한 Controller 인터페이스의 
+    // 추상 메서드이다.
     @Override
     public void execute() {
         loop:

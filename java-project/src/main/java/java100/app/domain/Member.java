@@ -15,27 +15,30 @@ public class Member {
         this.email = email;
         this.password = password;
     }
+
     public Member(String csv) throws CSVFormatException {
         String[] rec = csv.split(",");
-        if(rec.length != 3) 
-            throw new CSVFormatException("CSV 데이터 항목의 개수가 올바르지 않습니다");
+        if (rec.length != 3) // 데이터의 개수가 올바르지 않다면,
+            throw new CSVFormatException(
+                    "CSV 데이터 항목의 개수가 올바르지 않습니다.");
         
-        this.name = rec[0];
-        this.email = rec[1];
-        this.password = rec[2];
+        this.name = rec[0]; 
+        this.email = rec[1]; 
+        this.password = rec[2]; 
     }
+    
     @Override
     public String toString() {
         return "Member [name=" + name + ", email=" + email + ", password=" + password + "]";
     }
-    
+
     public String toCSVString() {
         return String.format("%s,%s,%s", 
                 this.getName(), 
-                this.getEmail(),
+                this.getEmail(), 
                 this.getPassword());
     }
-
+    
     public String getName() {
         return name;
     }

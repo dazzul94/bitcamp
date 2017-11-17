@@ -18,7 +18,6 @@ public class ScoreController extends GenericController<Score> {
     public ScoreController(String dataFilePath) {
         this.dataFilePath = dataFilePath;
         this.init();
-        
     }
     
     // ArrayList에 보관된 데이터를 score.csv 파일에 저장한다.
@@ -28,13 +27,16 @@ public class ScoreController extends GenericController<Score> {
     public void destroy() {
         
         try (PrintWriter out = new PrintWriter(
-                                new BufferedWriter(
-                                    new FileWriter(this.dataFilePath)))) {
+                                   new BufferedWriter(
+                                       new FileWriter(this.dataFilePath)))) {
             for (Score score : this.list) {
                 out.println(score.toCSVString());
             }
+            
+            // 버퍼에 남은 찌꺼기를 마저 출력한다.
+            // => 물론 close()가 호출되도 버퍼에 남은 찌꺼기가 출력될 것이다.
+            // => 그래도 가능한 명시적으로 출력하자!
             out.flush();
-            out.close();//해도 찌꺼기 처리된다
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,14 +50,14 @@ public class ScoreController extends GenericController<Score> {
     public void init() {
         
         try (BufferedReader in = new BufferedReader(
-                                    new FileReader(this.dataFilePath));) {
+                                   new FileReader(this.dataFilePath));) {
             
             String csv = null;
             while ((csv = in.readLine()) != null) {
                 try {
-                list.add(new Score(csv));
+                    list.add(new Score(csv));
                 } catch (CSVFormatException e) {
-                    System.out.println("CSV 데이터 형식 오류!");
+                    System.err.println("CSV 데이터 형식 오류!");
                     e.printStackTrace();
                 }
             }

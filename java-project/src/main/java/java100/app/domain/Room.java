@@ -1,7 +1,5 @@
 package java100.app.domain;
 
-import java.sql.Date;
-
 import java100.app.control.CSVFormatException;
 
 public class Room {
@@ -19,14 +17,18 @@ public class Room {
     
     public Room(String csv) throws CSVFormatException {
         String[] rec = csv.split(",");
-        if(rec.length != 3) 
-            throw new CSVFormatException("CSV 데이터 항목의 개수가 올바르지 않습니다");
+        if (rec.length != 3) // 데이터의 개수가 올바르지 않다면,
+            throw new CSVFormatException(
+                    "CSV 데이터 항목의 개수가 올바르지 않습니다.");
+        
         try {
-        this.location = rec[0];
-        this.name = rec[1];
-        this.capacity = Integer.parseInt(rec[2]);
+            this.location = rec[0];
+            this.name = rec[1]; 
+            this.capacity = Integer.parseInt(rec[2]);
+            
         } catch (Exception e) {
-            throw new CSVFormatException("CSV 데이터 항목의 형식이 올바르지 않습니다");
+            throw new CSVFormatException(
+                    "CSV 데이터 항목의 형식이 올바르지 않습니다.");
         }
     }
 
@@ -37,8 +39,8 @@ public class Room {
     
     public String toCSVString() {
         return String.format("%s,%s,%d", 
-                this.getLocation(), 
-                this.getName(),
+                this.getLocation(),
+                this.getName(), 
                 this.getCapacity());
     }
 
