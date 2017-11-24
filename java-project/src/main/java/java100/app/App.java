@@ -27,10 +27,19 @@ public class App {
             new HashMap<>();
 
     void init() {
-        controllerMap.put("/score", new ScoreController("./data/score.csv"));
-        controllerMap.put("/member", new MemberController("./data/member.csv"));
-        controllerMap.put("/board", new BoardController("./data/board.csv"));
-        controllerMap.put("/room", new RoomController("./data/room.csv")); // OK!
+        ScoreController scoreController = new ScoreController();
+        MemberController memberController = new MemberController();
+        BoardController boardController = new BoardController();
+        RoomController roomController = new RoomController();
+        scoreController.init();
+        memberController.init();
+        boardController.init();
+        roomController.init();
+        
+        controllerMap.put("/score", scoreController);
+        controllerMap.put("/member", memberController);
+        controllerMap.put("/board", boardController);
+        controllerMap.put("/room", roomController); // OK!
     }
 
     void service() throws Exception {
