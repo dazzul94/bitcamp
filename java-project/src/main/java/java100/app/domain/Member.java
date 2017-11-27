@@ -16,6 +16,24 @@ public class Member {
         this.name = name;
         this.email = email;
     }
+    public Member(int no, String name, String email, Date createDate) {
+        this.no = no;
+        this.name = name;
+        this.email = email;
+        this.createDate = createDate;
+    }
+    public Member(int no, String name, String email, String password) {
+        this.no = no;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public Member(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 
     @Override
     public String toString() {

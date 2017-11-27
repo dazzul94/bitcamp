@@ -2,16 +2,16 @@ package java100.app.domain;
 
 public class Room {
     protected int no;
-    protected String location;
     protected String name;
+    protected String location;
     protected int capacity;
     
     public Room() {}
     
-    public Room(int no, String location, String name, int capacity) {
+    public Room(int no, String name, String location,  int capacity) {
         this.no = no;
-        this.location = location;
         this.name = name;
+        this.location = location;
         this.capacity = capacity;
     }
     

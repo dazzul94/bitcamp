@@ -19,7 +19,6 @@ import java100.app.control.RoomController;
 import java100.app.control.ScoreController;
 // 
 public class App {
-
     ServerSocket ss;
     Scanner keyScan = new Scanner(System.in);
 
@@ -27,10 +26,12 @@ public class App {
             new HashMap<>();
 
     void init() {
+        
         ScoreController scoreController = new ScoreController();
         MemberController memberController = new MemberController();
         BoardController boardController = new BoardController();
         RoomController roomController = new RoomController();
+        
         scoreController.init();
         memberController.init();
         boardController.init();

@@ -1,17 +1,17 @@
 package java100.app.control;
 
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
+import java100.app.dao.DaoException;
+import java100.app.dao.RoomDao;
 import java100.app.domain.Room;
 
 public class RoomController extends ArrayList<Room> implements Controller {
     private static final long serialVersionUID = 1L;
 
+    RoomDao roomDao = new RoomDao();
     @Override
     public void destroy() {
     }
@@ -39,18 +39,14 @@ public class RoomController extends ArrayList<Room> implements Controller {
     private void doList(Request request, Response response) {
         PrintWriter out  = response.getWriter();
         out.println("[강의실 목록]");
-        try (Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/studydb","study","1111");
-                PreparedStatement pstmt = con.prepareStatement(
-                        "select * from ex_room");
-                ResultSet rs = pstmt.executeQuery();
-                ) {
-            while(rs.next()) {
-                out.printf("%d, %-4s, %4s, %4d\n", 
-                        rs.getInt("no"), 
-                        rs.getString("loc"), 
-                        rs.getString("name"),
-                        rs.getInt("capacity"));
+        try  {
+            List<Room> list = roomDao.selectList();
+            for (Room room : list) {
+                out.printf("%d, %-4s, %4s, %4d\n",
+                        room.getNo(),
+                        room.getName(),
+                        room.getLocation(),
+                        room.getCapacity());
             }
 
         } catch (Exception e) {
@@ -61,19 +57,16 @@ public class RoomController extends ArrayList<Room> implements Controller {
 
     private void doAdd(Request request, Response response) {
         PrintWriter out = response.getWriter();
-        
-        try (Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/studydb","study","1111");
-                PreparedStatement pstmt = con.prepareStatement(
-                        "insert into ex_room(name,loc,capacity) values(?,?,?)");
-                ) {
-            pstmt.setString(1, request.getParameter("name"));
-            pstmt.setString(2, request.getParameter("loc"));
-            pstmt.setInt(3, Integer.parseInt(request.getParameter("capacity")));            
-            
-            pstmt.executeUpdate();
+
+        try {
+            Room room = new Room();
+            room.setName(request.getParameter("name"));
+            room.setLocation(request.getParameter("loc"));
+            room.setCapacity(Integer.parseInt(request.getParameter("capacity")));
+
+            roomDao.insert(room);
             out.println("저장하였습니다");
-            
+
         } catch (Exception e) {
             e.getMessage();
             e.printStackTrace();
@@ -83,25 +76,17 @@ public class RoomController extends ArrayList<Room> implements Controller {
     private void doDelete(Request request, Response response) {
         PrintWriter out = response.getWriter();
         out.println("[강의실 삭제]");
-        
-        try (Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/studydb","study","1111");
-                PreparedStatement pstmt = con.prepareStatement(
-                        "delete from ex_room where no=?");
-                ) {
-            pstmt.setInt(1, Integer.parseInt(request.getParameter("no")));            
-            
-            if(pstmt.executeUpdate() > 0) {
+
+        int no = Integer.parseInt(request.getParameter("no"));            
+        try {
+            if(roomDao.delete(no) > 0) {
                 out.println("삭제하였습니다");
             } else {
-                out.printf("%s의 성적 정보가 없습니다.\n", 
-                        request.getParameter("no"));
-                }
+                out.printf("%s의 성적 정보가 없습니다.\n", no);
+            }
         } catch (Exception e) {
-            e.getMessage();
-            e.printStackTrace();
+            throw new DaoException(e);
         }
-            
     }
 }
 
