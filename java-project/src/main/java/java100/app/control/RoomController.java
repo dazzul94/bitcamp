@@ -11,7 +11,13 @@ import java100.app.domain.Room;
 public class RoomController extends ArrayList<Room> implements Controller {
     private static final long serialVersionUID = 1L;
 
-    RoomDao roomDao = new RoomDao();
+    RoomDao roomDao;
+
+    public void setRoomDao(RoomDao roomDao) {
+        this.roomDao = roomDao;
+    }
+
+
     @Override
     public void destroy() {
     }

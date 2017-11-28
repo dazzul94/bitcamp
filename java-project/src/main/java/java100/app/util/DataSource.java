@@ -2,10 +2,16 @@ package java100.app.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DataSource {
 
+    private String driverClassName;
+    private String url;
+    private String username;
+    private String password;
+    
     static {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -14,26 +20,53 @@ public class DataSource {
         }
     }
 
-    static ArrayList<Connection> list = new ArrayList<>();
+    private ArrayList<Connection> list = new ArrayList<>();
 
     //빌려주기(있으면 꺼내주고 , 없으면 만들어준다) 이 메소드는 쓰레드들이 실행할때 동시에 못접근한다    
-    synchronized public static Connection getConnection() throws Exception {
-
+    synchronized public Connection getConnection() throws SQLException, ClassNotFoundException {
+        
         if (list.size() > 0) {
             return list.remove(0);
         } 
-        return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/studydb","study","1111");
+        Class.forName(this.driverClassName);
+        
+        return DriverManager.getConnection(this.url, this.username, this.password);
 
     }
     //반납
-    public static void returnConnection(Connection con) {
+    public void returnConnection(Connection con) {
         try {
             if (con == null) return;
             if (con.isClosed()) return;
 
             list.add(con);
         } catch (Exception e) {}
+    }
+    
+    
+    public String getDriverClassName() {
+        return driverClassName;
+    }
+    public void setDriverClassName(String driverClassName) {
+        this.driverClassName = driverClassName;
+    }
+    public String getUrl() {
+        return url;
+    }
+    public void setUrl(String url) {
+        this.url = url;
+    }
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 

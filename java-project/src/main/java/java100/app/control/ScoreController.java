@@ -7,7 +7,11 @@ import java100.app.dao.ScoreDao;
 import java100.app.domain.Score;
 
 public class ScoreController implements Controller {
-    ScoreDao scoreDao = new ScoreDao();
+    ScoreDao scoreDao;
+    
+    public void setScoreDao(ScoreDao scoreDao) {
+        this.scoreDao = scoreDao;
+    }
 
     @Override
     public void destroy() {}
@@ -139,16 +143,3 @@ public class ScoreController implements Controller {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

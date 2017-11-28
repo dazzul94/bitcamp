@@ -6,81 +6,65 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Scanner;
 
-import java100.app.control.BoardController;
+import java100.app.beans.ApplicationContext;
 import java100.app.control.Controller;
-import java100.app.control.MemberController;
 import java100.app.control.Request;
 import java100.app.control.Response;
-import java100.app.control.RoomController;
-import java100.app.control.ScoreController;
-// 
+import java100.app.util.DataSource;
+
 public class App {
     ServerSocket ss;
-    Scanner keyScan = new Scanner(System.in);
 
-    HashMap<String,Controller> controllerMap = 
-            new HashMap<>();
+    ApplicationContext beanContainer;
 
     void init() {
+        beanContainer = new ApplicationContext("./bin/application-context.properties");
+
+        // 오라클로 바꾸고 싶으면 여기만 바꾸면 된다
+        DataSource ds = new DataSource();
+        ds.setDriverClassName("com.mysql.jdbc.Driver");
+        ds.setUrl("jdbc:mysql://localhost:3306/studydb");
+        ds.setUsername("study");
+        ds.setPassword("1111");
+
+        beanContainer.addBean("mysqlDataSource", ds);
         
-        ScoreController scoreController = new ScoreController();
-        MemberController memberController = new MemberController();
-        BoardController boardController = new BoardController();
-        RoomController roomController = new RoomController();
-        
-        scoreController.init();
-        memberController.init();
-        boardController.init();
-        roomController.init();
-        
-        controllerMap.put("/score", scoreController);
-        controllerMap.put("/member", memberController);
-        controllerMap.put("/board", boardController);
-        controllerMap.put("/room", roomController); // OK!
+        System.out.println("--------------------------------------------------------------------");
+        beanContainer.refreshBeanFactory();
     }
 
     void service() throws Exception {
         ss = new ServerSocket(9999);
         System.out.println("서버 실행!");
-        
+
         while (true) {
             new HttpAgent(ss.accept()).start();
         } // while
-        
-    }
-    private void save() {
-        Collection<Controller> controllers = controllerMap.values();
-        for (Controller controller : controllers) {
-            controller.destroy();
-        }
-    }
 
+    }
 
     private void request(String command, PrintWriter out) {
 
         String menuName = command;
-        
+
         int i = command.indexOf("/", 1);
         if (i != -1) {
             menuName = command.substring(0, i);
         }
-        
-        Controller controller = controllerMap.get(menuName);
 
-        if (controller == null) {
+        Object controller = beanContainer.getBean(menuName);
+
+        if (controller == null && controller instanceof Controller) {
             out.println("해당 명령을 지원하지 않습니다.");
             return;
         }
         Request request = new Request(command);
-        
+
         Response response = new Response();
         response.setWriter(out);
-        
-        controller.execute(request, response);
+
+        ((Controller) controller).execute(request, response);
     }
 
     private void hello(String command, PrintWriter out) {
@@ -112,55 +96,49 @@ public class App {
     public static void main(String[] args) throws Exception {
         App app = new App();
         app.init();
-        app.service(); 
+        app.service();
     }
-    
+
     class HttpAgent extends Thread {
         Socket socket;
-        
+
         public HttpAgent(Socket socket) {
             this.socket = socket;
         }
-        
+
         @Override
         public void run() {
-            try (
-                    Socket socket = this.socket;
+            try (Socket socket = this.socket;
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     PrintWriter out = new PrintWriter(new BufferedOutputStream(socket.getOutputStream()));
-                    
-                    ){
-                    //request-line
-                    String command = in.readLine().split(" ")[1];
-                    //header
-                    String header = null;
-                    while (true) {
-                        header = in.readLine();
-                        if (header.equals(""))
-                            break;
-                    }
-                    //status-line
-                    out.println("HTTP/1.1 200 OK");
-                    
-                    out.println("Content-Type:text/plain;charset=UTF-8");
-                    out.println();
-                    
-                    if (command.equals("/")) {
-                        hello(command, out);
-                    } else {
-                        request(command, out);
-                        save(); //각각의 쓰레드가 save()를 호출한다
-                    }
-                    out.println();
-                    out.flush();
+
+            ) {
+                // request-line
+                String command = in.readLine().split(" ")[1];
+                // header
+                String header = null;
+                while (true) {
+                    header = in.readLine();
+                    if (header.equals(""))
+                        break;
+                }
+                // status-line
+                out.println("HTTP/1.1 200 OK");
+
+                out.println("Content-Type:text/plain;charset=UTF-8");
+                out.println();
+
+                if (command.equals("/")) {
+                    hello(command, out);
+                } else {
+                    request(command, out);
+                }
+                out.println();
+                out.flush();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            
+
         }
     }
 }
-
-
-
-
