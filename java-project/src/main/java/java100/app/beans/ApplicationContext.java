@@ -1,45 +1,54 @@
 package java100.app.beans;
 
-import java.io.FileReader;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Properties;
 import java.util.Set;
 
+import org.reflections.Reflections;
+
+import java100.app.annotation.Component;
+
 public class ApplicationContext {
-    public HashMap<String, Object> pool = new HashMap<>();
+
+    HashMap<String, Object> pool = new HashMap<>();
 
     public ApplicationContext() {
     }
 
-    public ApplicationContext(String proPath) {
-        Properties props = new Properties();
+    // 2) 생성자에서 프로퍼티 파일을 읽어서
+    // 등록된 클래스의 인스턴스를 생성한다.
+    //
 
-        try (FileReader in = new FileReader(proPath)) {
-            props.load(in);
+    public ApplicationContext(String basePackage) {
+        
+        try {
+            Reflections reflections = new Reflections(basePackage);
+            Set<Class<?>> classes = reflections.getTypesAnnotatedWith(Component.class);
 
-            Set<Object> keySet = props.keySet();
-            for (Object key : keySet) {
-                String name = (String) key;
+            for (Class<?> clazz : classes) {
 
-                Class<?> clazz = Class.forName(props.getProperty(name));
+                Component compAnno = clazz.getAnnotation(Component.class);
+                if (compAnno == null) continue;
 
                 Object obj = clazz.newInstance();
-
-                pool.put(name, obj);
+                if (compAnno.value().length() == 0) { //이름이 없다면 DaoImpl는 이름이 설정x
+                    pool.put(clazz.getName(), obj); //roomDaoImpl
+                } else {
+                    pool.put(compAnno.value(), obj); //"/room
+                }
             }
-            
             injectDependency();
+            
         } catch (Exception e) {
-            throw new BeansException("프로퍼티 파일 로딩중 오류 발생!",e);
+            throw new BeansException("프로퍼티 파일 로딩 중 오류 발생!", e);
         }
     }
 
-    public Object getBean(String name) { // 왜 스태틱으로 만들었나? Dao에서 호출하려고
+    public Object getBean(String name) {
         Object bean = pool.get(name);
         if (bean == null)
-            throw new BeansException("빈을 찾을 수 없습니다");
+            throw new BeansException("빈을 찾을 수 없습니다.");
         return bean;
     }
 
@@ -48,60 +57,82 @@ public class ApplicationContext {
     }
 
     public String[] getBeanDefinitionNames() {
+        // pool에서 객체를 저장할 때 사용한 이름 목록을 가져온다.
         Set<String> keySet = pool.keySet();
 
+        // 이름을 저장할 배열을 만든다.
         String[] names = new String[keySet.size()];
 
+        // 이름이 저장된 Set 객체에 배열을 주면서 이름을 담아 달라고 한다.
         keySet.toArray(names);
 
-        return names;// keySet에 담긴 이름들을 names를 준비해서 names에 저장함
+        // 이름이 저장된 배열을 리턴한다.
+        return names;
     }
 
+    // pool에 저장된 각각의 객체에 대해 의존 객체를 찾아 주입한다.
     private void injectDependency() {
         Collection<Object> objs = pool.values();
-
         for (Object obj : objs) {
-            // System.out.println(obj.getClass().getName());
             invokeSetter(obj);
         }
     }
 
+    // 한 객체의 셋터를 찾아 호출한다.
     private void invokeSetter(Object obj) {
+
+        // 해당 객체에 선언된 모든 메서드 목록을 꺼낸다.
         Method[] methods = obj.getClass().getDeclaredMethods();
 
-        for (Method method : methods) {
+        // 목록에서 셋터를 찾아 호출한다.
+        for (Method m : methods) {
+            // System.out.println("=>" + m.getName());
 
-            if (!method.getName().startsWith("set"))
+            if (!m.getName().startsWith("set"))
                 continue;
-            // System.out.println("=> " + method.getName());
-            Object dependency = findObject(getFirstParameterType(method));
+
+            // 셋터가 원하는 타입의 객체가 pool에 들어 있는지 찾아 본다.
+            Object dependency = findObject(getFirstParameterType(m));
 
             if (dependency == null)
                 continue;
+
+            // 셋터가 원하는 타입의 객체를 찾았으면,
+            // 셋터를 호출하여 그 객체를 주입한다.
             try {
-                method.invoke(obj, dependency);
-                System.out.printf("%s.%s 호출됨!", obj.getClass().getName());
+                m.invoke(obj, dependency);
+                // System.out.printf("%s.%s() 호출됨!\n",
+                // obj.getClass().getName(),
+                // m.getName());
+
             } catch (Exception e) {
-                throw new BeansException(obj.getClass().getName() + " 클래스의 " + method.getName() + " 메서드 호출 오류");
-
+                throw new BeansException(obj.getClass().getName() + " 클래스의 " + m.getName() + " 메서드 호출 오류!");
             }
-
         }
-
     }
 
-    private Class<?> getFirstParameterType(Method method) {
-        return method.getParameterTypes()[0];
+    private Class<?> getFirstParameterType(Method m) {
+        return m.getParameterTypes()[0];
     }
 
+    // 주어진 타입의 객체가 있는지 pool을 뒤져서 찾는다.
     private Object findObject(Class<?> type) {
+
+        // pool 저장된 객체 목록을 꺼낸다.
         Collection<Object> objs = pool.values();
+
+        // 목록에서 주어진 타입의 객체가 있는지 검사한다.
         for (Object obj : objs) {
             if (type.isInstance(obj))
                 return obj;
         }
+
+        // 못 찾았으면 null을 리턴한다.
         return null;
     }
+
+    // 빈 컨테이너에 객체가 추가되거나 제거되었을 때
+    // 의존 객체 주입을 다시해야 한다.
     public void refreshBeanFactory() {
         injectDependency();
     }
