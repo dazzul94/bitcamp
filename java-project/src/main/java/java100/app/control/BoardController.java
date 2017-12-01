@@ -3,36 +3,45 @@ package java100.app.control;
 import java.io.PrintWriter;
 import java.util.List;
 
-import java100.app.annotation.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java100.app.dao.BoardDao;
 import java100.app.domain.Board;
 
 @Component("/board")
 public class BoardController implements Controller {
+    @Autowired
     BoardDao boardDao;
-    
-
-    public void setBoardDao(BoardDao boardDao) {
-        this.boardDao = boardDao;
-    }
 
     @Override
     public void destroy() {
     }
 
     @Override
-    public void init() {}
+    public void init() {
+    }
 
     @Override
     public void execute(Request request, Response response) {
 
         switch (request.getMenuPath()) {
-        case "/board/list": this.doList(request, response); break;
-        case "/board/add": this.doAdd(request, response); break;
-        case "/board/view": this.doView(request, response); break;
-        case "/board/update": this.doUpdate(request, response); break;
-        case "/board/delete": this.doDelete(request, response); break;
-        default: 
+        case "/board/list":
+            this.doList(request, response);
+            break;
+        case "/board/add":
+            this.doAdd(request, response);
+            break;
+        case "/board/view":
+            this.doView(request, response);
+            break;
+        case "/board/update":
+            this.doUpdate(request, response);
+            break;
+        case "/board/delete":
+            this.doDelete(request, response);
+            break;
+        default:
             response.getWriter().println("해당 명령이 없습니다.");
         }
     }
@@ -43,11 +52,8 @@ public class BoardController implements Controller {
 
         List<Board> list = boardDao.selectList();
         try {
-            for(Board board : list) {
-                out.printf("%d, %-4s, %4s, %d\n",
-                        board.getNo(),
-                        board.getTitle(),
-                        board.getRegDate(),
+            for (Board board : list) {
+                out.printf("%d, %-4s, %4s, %d\n", board.getNo(), board.getTitle(), board.getRegDate(),
                         board.getViewCount());
             }
         } catch (Exception e) {
@@ -73,13 +79,13 @@ public class BoardController implements Controller {
             e.printStackTrace();
             out.println(e.getMessage());
         }
-    } 
+    }
 
     private void doView(Request request, Response response) {
         PrintWriter out = response.getWriter();
         out.println("[게시물 상세 정보]");
 
-        try{
+        try {
             int no = Integer.parseInt(request.getParameter("no"));
 
             Board board = boardDao.selectOne(no);
@@ -96,7 +102,7 @@ public class BoardController implements Controller {
             e.printStackTrace();
             out.println(e.getMessage());
         }
-    } 
+    }
 
     private void doUpdate(Request request, Response response) {
         PrintWriter out = response.getWriter();
@@ -139,11 +145,3 @@ public class BoardController implements Controller {
     }
 
 }
-
-
-
-
-
-
-
-

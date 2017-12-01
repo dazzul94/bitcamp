@@ -3,35 +3,46 @@ package java100.app.control;
 import java.io.PrintWriter;
 import java.util.List;
 
-import java100.app.annotation.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java100.app.dao.ScoreDao;
 import java100.app.domain.Score;
 
 @Component("/score")
 public class ScoreController implements Controller {
-    
+
+    @Autowired
     ScoreDao scoreDao;
-    
-    public void setScoreDao(ScoreDao scoreDao) {
-        this.scoreDao = scoreDao;
+
+    @Override
+    public void destroy() {
     }
 
     @Override
-    public void destroy() {}
-
-    @Override
-    public void init() {}
+    public void init() {
+    }
 
     @Override
     public void execute(Request request, Response response) {
 
         switch (request.getMenuPath()) {
-        case "/score/add" : this.doAdd(request, response); break;
-        case "/score/list": this.doList(request, response); break;
-        case "/score/view": this.doView(request, response); break;
-        case "/score/update": this.doUpdate(request, response); break;
-        case "/score/delete": this.doDelete(request, response); break;
-        default: 
+        case "/score/add":
+            this.doAdd(request, response);
+            break;
+        case "/score/list":
+            this.doList(request, response);
+            break;
+        case "/score/view":
+            this.doView(request, response);
+            break;
+        case "/score/update":
+            this.doUpdate(request, response);
+            break;
+        case "/score/delete":
+            this.doDelete(request, response);
+            break;
+        default:
             response.getWriter().println("해당 명령이 없습니다.");
         }
     }
@@ -41,11 +52,11 @@ public class ScoreController implements Controller {
         PrintWriter out = response.getWriter();
         out.println("[성적 삭제]");
         try {
-            int no =Integer.parseInt(request.getParameter("no"));
+            int no = Integer.parseInt(request.getParameter("no"));
             if (scoreDao.delete(no) > 0) {
                 out.println("삭제했습니다");
             } else {
-                out.printf("%d의 성적 정보가 없습니다.\n", no); 
+                out.printf("%d의 성적 정보가 없습니다.\n", no);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,7 +85,7 @@ public class ScoreController implements Controller {
                 out.printf("%s 의 성적 정보가 없습니다\n", score.getNo());
             }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.getMessage();
             e.printStackTrace();
         }
@@ -88,7 +99,7 @@ public class ScoreController implements Controller {
             int no = Integer.parseInt(request.getParameter("no"));
 
             Score score = scoreDao.selectOne(no);
-            
+
             if (score != null) {
                 out.printf("번호: %d\n", score.getNo());
                 out.printf("이름: %s\n", score.getName());
@@ -114,11 +125,7 @@ public class ScoreController implements Controller {
         try {
             List<Score> list = scoreDao.selectList();
             for (Score score : list) {
-                out.printf("%d, %-4s, %4d, %6.1f\n",
-                        score.getNo(),
-                        score.getName(),
-                        score.getSum(),
-                        score.getAver());
+                out.printf("%d, %-4s, %4d, %6.1f\n", score.getNo(), score.getName(), score.getSum(), score.getAver());
             }
         } catch (Exception e) {
             e.printStackTrace();

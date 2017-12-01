@@ -39,6 +39,13 @@ repositories {
 }
 
 dependencies {
+
+//Spring Ioc 라이브러리
+    compile 'org.springframework:spring-context:5.0.2.RELEASE'
+    
+    //Reflection API
+    compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
+
     //MySQL DBMS의 JDBC Driver
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.44'
     compile 'com.google.guava:guava:22.0'

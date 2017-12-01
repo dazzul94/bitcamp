@@ -4,7 +4,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import java100.app.annotation.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java100.app.dao.DaoException;
 import java100.app.dao.RoomDao;
 import java100.app.domain.Room;
@@ -13,17 +15,12 @@ import java100.app.domain.Room;
 public class RoomController extends ArrayList<Room> implements Controller {
     private static final long serialVersionUID = 1L;
 
+    @Autowired
     RoomDao roomDao;
-
-    public void setRoomDao(RoomDao roomDao) {
-        this.roomDao = roomDao;
-    }
-
 
     @Override
     public void destroy() {
     }
-
 
     @Override
     public void init() {
@@ -33,27 +30,31 @@ public class RoomController extends ArrayList<Room> implements Controller {
             throw new RuntimeException("JDBC 드라이버를 찾을 수 없습니다");
         }
     }
+
     @Override
     public void execute(Request request, Response response) {
         switch (request.getMenuPath()) {
-        case "/room/list": this.doList(request, response); break;
-        case "/room/add": this.doAdd(request, response); break;
-        case "/room/delete": this.doDelete(request, response); break;
-        default: 
+        case "/room/list":
+            this.doList(request, response);
+            break;
+        case "/room/add":
+            this.doAdd(request, response);
+            break;
+        case "/room/delete":
+            this.doDelete(request, response);
+            break;
+        default:
             response.getWriter().println("해당 명령이 없습니다.");
         }
     }
 
     private void doList(Request request, Response response) {
-        PrintWriter out  = response.getWriter();
+        PrintWriter out = response.getWriter();
         out.println("[강의실 목록]");
-        try  {
+        try {
             List<Room> list = roomDao.selectList();
             for (Room room : list) {
-                out.printf("%d, %-4s, %4s, %4d\n",
-                        room.getNo(),
-                        room.getName(),
-                        room.getLocation(),
+                out.printf("%d, %-4s, %4s, %4d\n", room.getNo(), room.getName(), room.getLocation(),
                         room.getCapacity());
             }
 
@@ -79,15 +80,15 @@ public class RoomController extends ArrayList<Room> implements Controller {
             e.getMessage();
             e.printStackTrace();
         }
-    } 
+    }
 
     private void doDelete(Request request, Response response) {
         PrintWriter out = response.getWriter();
         out.println("[강의실 삭제]");
 
-        int no = Integer.parseInt(request.getParameter("no"));            
+        int no = Integer.parseInt(request.getParameter("no"));
         try {
-            if(roomDao.delete(no) > 0) {
+            if (roomDao.delete(no) > 0) {
                 out.println("삭제하였습니다");
             } else {
                 out.printf("%s의 성적 정보가 없습니다.\n", no);
@@ -97,13 +98,3 @@ public class RoomController extends ArrayList<Room> implements Controller {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-

@@ -39,6 +39,10 @@ repositories {
 }
 
 dependencies {
+
+//Spring Ioc 라이브러리
+    compile 'org.springframework:spring-context:5.0.2.RELEASE'
+    
     //Reflection API
     compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
 
