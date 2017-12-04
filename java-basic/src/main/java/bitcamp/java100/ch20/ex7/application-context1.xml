@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 1) Singleton : 한개만 생성-->
+	<bean id="e1" class="bitcamp.java100.ch20.ex7.Engine">
+		<property name="name" value="비트엔진"/>
+		<property name="valve" value="16"/>
+		<property name="cc" value="1980"/>
+	</bean>
+	
+	<!-- 2) Prototype : getBean()을 호출할 때마다 새로 생성 -->
+	<!-- 3) Request (웹 어플리케이션에서) 요청이 들어올 때마다 생성 -->
+	<!-- 4) Session: 한 세션당 한개, 세션이 만들어질 때마다 생성된다 -->
+
+
+</beans>
