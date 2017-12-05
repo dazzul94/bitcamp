@@ -47,6 +47,15 @@ public class DataSource {
         }
     }
 
+    synchronized public void close() {
+        for (Connection con : list) {
+            try {
+                con.close();
+            } catch (Exception e) {
+            }
+        }
+    }
+
     public String getDriverClassName() {
         return driverClassName;
     }
