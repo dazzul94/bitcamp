@@ -9,15 +9,14 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
-@WebServlet({"/step1/Servlet02/*", "/servlet02","/ohora"}) //한 URL배치에 두개이상의 Sevlet이 배치되면 안된다
-public class Servlet02 implements Servlet{
+ 
+public class Servlet03 implements Servlet{
 
     ServletConfig config;
     
-    
     @Override
     public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
-        System.out.println("step1.Servlet02.service()");
+        System.out.println("step1.Servlet03.service()");
     }
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -30,7 +29,7 @@ public class Servlet02 implements Servlet{
 
     @Override
     public String getServletInfo() {
-        return  "서블릿 배치 URL";
+        return  "Servlet03-XML 파일에 서블릿 배치 정보 등록";
     }
 
     @Override
