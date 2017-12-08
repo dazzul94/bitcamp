@@ -1,8 +1,7 @@
 apply plugin: 'java'
-apply plugin: 'application'
-//이클립스 설정파일을 만들려면
-apply plugin: 'eclipse'
 apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+
 
 eclipse {
   jdt { 
@@ -56,5 +55,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-mainClassName = 'App'
+
 
