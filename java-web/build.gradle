@@ -13,6 +13,7 @@ apply plugin: 'war'
 
 // Apply the application plugin to add support for building an application
 apply plugin: 'application'
+//compileJava.options.encoding = 'UTF-8'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
