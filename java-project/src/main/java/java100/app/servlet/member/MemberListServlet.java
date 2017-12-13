@@ -18,28 +18,53 @@ import java100.app.listener.ContextLoaderListener;
 @WebServlet("/member/list")
 public class MemberListServlet extends HttpServlet {
 
-
     @Override
-    public void service(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
-        
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         MemberDao memberDao = ContextLoaderListener.iocContainer.getBean(MemberDao.class);
 
-        response.setContentType("text/plain;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
 
         PrintWriter out = response.getWriter();
-        out.println("[회원 목록]");
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<title>회원관리</title>");
+        out.println("<link rel='stylesheet' href='../node_modules/bootstrap/dist/css/bootstrap.min.css'>");
+        out.println("<style>");
+        out.println(".container {");
+        out.println("width: 680px;");
+        out.println("}");
+        out.println("</style>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<div class='container'>");
+        out.println("<h1>회원 목록</h1>");
+        out.println("<p><a href='add' class='btn btn-primary btn-sm'>추가</a></p>");
+        out.println("<table class='table table-sm'>");
+        out.println("<thead>");
+        out.println("<tr>");
+        out.println("<th>번호</th><th>이름</th><th>이메일</th><th>날짜</th>");
+        out.println("</tr>");
+        out.println("</thead>");
+        out.println("<tbody>");
 
-        List<Member> list = memberDao.selectList();
         try {
+            List<Member> list = memberDao.selectList();
             for (Member member : list) {
-                out.printf("%d, %s, %s, %s\n", member.getNo(), member.getName(), member.getEmail(),
+                out.printf("<tr><td>%d</td><td>" + "<a href='view?no=%d'>%s</a>" + "</td><td>%s</td><td>%s</td></tr>\n",
+                        member.getNo(), member.getNo(), member.getName(), member.getEmail(),
                         member.getCreateDate().toString());
             }
         } catch (Exception e) {
             e.printStackTrace();
             out.println(e.getMessage());
         }
+        out.println("</tbody>");
+        out.println("</table>");
+        out.println("</div>");
+        out.println("</body>");
+        out.println("</html>");
 
     }
 }
