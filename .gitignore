@@ -1,7 +1,7 @@
-//git에 올리지 말아야 할 파일명들
 **/node_modules
 **/.vscode
 **/.gradle/
+**/.settings/
 **/bin
 **/build
 **/temp/
@@ -13,4 +13,5 @@
 *.log
 *.project
 *.DS_Store
-!build.gradle //이거는 올려야함
+package-lock.json
+!build.gradle
