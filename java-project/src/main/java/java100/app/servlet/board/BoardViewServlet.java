@@ -3,6 +3,7 @@ package java100.app.servlet.board;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +21,7 @@ public class BoardViewServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         BoardDao boardDao = ContextLoaderListener.iocContainer.getBean(BoardDao.class);
-        
+
         response.setContentType("text/html;charset=UTF-8");
 
         PrintWriter out = response.getWriter();
@@ -29,14 +30,13 @@ public class BoardViewServlet extends HttpServlet {
         out.println("<head>");
         out.println("<title>게시물관리</title>");
         out.println("<link rel='stylesheet' href='../node_modules/bootstrap/dist/css/bootstrap.min.css'>");
-        out.println("<style>");
-        out.println(".container {");
-        out.println("width: 680px;");
-        out.println("}");
-        out.println("</style>");
+        out.println("<link rel='stylesheet' href='../css/common.css'>");
         out.println("</head>");
         out.println("<body>");
         out.println("<div class='container'>");
+
+        RequestDispatcher rd = request.getRequestDispatcher("/header");
+        rd.include(request, response);
         out.println("<h1>게시물 상세정보</h1>");
 
         try {
@@ -80,8 +80,8 @@ public class BoardViewServlet extends HttpServlet {
                         board.getViewCount());
                 out.println("</div>");
                 out.println("</div>");
-                out.println("<button class='btn btn-primary btn-sm'>변경</button>");
-                out.printf("<a href='delete?no=%d' class='btn btn-primary btn-sm'>삭제</a>", board.getNo());
+                out.println("<button class='btn btn-warning btn-sm'>변경</button>");
+                out.printf("<a href='delete?no=%d' class='btn btn-danger btn-sm'>삭제</a>", board.getNo());
                 out.println("</form>");
             } else {
                 out.printf("<p>%s의 게시물 정보가 없습니다.</p>", no);
@@ -90,7 +90,13 @@ public class BoardViewServlet extends HttpServlet {
             e.printStackTrace();
             out.println(e.getMessage());
         }
+        rd = request.getRequestDispatcher("/footer");
+        rd.include(request, response);
         out.println("</div>");
+
+        out.println("<script src='../node_modules/jquery/dist/jquery.slim.min.js'></script>");
+        out.println("<script src='../node_modules/popper.js/dist/umd/popper.min.js'></script>");
+        out.println("<script src='../node_modules/bootstrap/dist/js/bootstrap.min.js'></script>");
         out.println("</body>");
         out.println("</html>");
     }

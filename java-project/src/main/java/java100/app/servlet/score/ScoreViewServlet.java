@@ -3,6 +3,7 @@ package java100.app.servlet.score;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,14 +30,13 @@ public class ScoreViewServlet extends HttpServlet {
         out.println("<head>");
         out.println("<title>성적관리</title>");
         out.println("<link rel='stylesheet' href='../node_modules/bootstrap/dist/css/bootstrap.min.css'>");
-        out.println("<style>");
-        out.println(".container {");
-        out.println("width: 680px;");
-        out.println("}");
-        out.println("</style>");
+        out.println("<link rel='stylesheet' href='../css/common.css'>");
         out.println("</head>");
         out.println("<body>");
         out.println("<div class='container'>");
+        
+        RequestDispatcher rd = request.getRequestDispatcher("/header");
+        rd.include(request, response);
         out.println("<h1>성적 상세정보</h1>");
 
         try {
@@ -96,8 +96,8 @@ public class ScoreViewServlet extends HttpServlet {
                 out.println("</div>");
                 out.println("<div class='form-group row'>");
                 out.println("<div class='col-sm-10'>");
-                out.println("<button class='btn btn-primary btn-sm'>변경</button>");
-                out.printf("<a href='delete?no=%d' class='btn btn-primary btn-sm'>삭제</a>", score.getNo());
+                out.println("<button class='btn btn btn-warning btn-sm'>변경</button>");
+                out.printf("<a href='delete?no=%d' class='btn btn btn-danger btn-sm'>삭제</a>", score.getNo());
                 out.println("</div>");
                 out.println("</div>");
                 out.println("</form>");
@@ -109,7 +109,13 @@ public class ScoreViewServlet extends HttpServlet {
             e.printStackTrace();
             out.println(e.getMessage());
         }
+        rd = request.getRequestDispatcher("/footer");
+        rd.include(request, response);
         out.println("</div>");
+        
+        out.println("<script src='../node_modules/jquery/dist/jquery.slim.min.js'></script>");
+        out.println("<script src='../node_modules/popper.js/dist/umd/popper.min.js'></script>");
+        out.println("<script src='../node_modules/bootstrap/dist/js/bootstrap.min.js'></script>");
         out.println("</body>");
         out.println("</html>");
     }
