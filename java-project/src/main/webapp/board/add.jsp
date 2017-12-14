@@ -61,7 +61,7 @@ try {
 }
 %>
 <p>저장하였습니다.</p>
-<p><a href='list' class='btn btn-info btn-sm'>목록</a></p>
+<p><a href='list.jsp' class='btn btn-info btn-sm'>목록</a></p>
 <footer>
    비트캠프 자바 100기! @2017
 </footer>

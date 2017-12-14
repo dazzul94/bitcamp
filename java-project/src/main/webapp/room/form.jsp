@@ -39,7 +39,7 @@
 </nav>
 </header>
 <h1>강의실 등록</h1>
-<form action="add" method='post'>
+<form action="add.jsp" method='post'>
 <div class='form-group row'>
 <label for='location' class='col-sm-2 col-form-label'>지역</label>
 <div class='col-sm-10'>
