@@ -18,38 +18,35 @@
 <body>
 	<div class='container'>
 
-		<%
-		    out.flush();
-		    RequestDispatcher rd = request.getRequestDispatcher("/header");
-		    rd.include(request, response);
-		%>
+		<jsp:include page="/header.jsp"/>
 		<h1>성적 삭제</h1>
 		<%
 		    try {
 		        int no = Integer.parseInt(request.getParameter("no"));
 		        if (scoreDao.delete(no) > 0) {
-		            out.println("<p>삭제했습니다</p>");
-		        } else {
+		%>
+		<p>삭제했습니다</p>
+		<%
+		    } else {
 		            PrintWriter out2 = new PrintWriter(out);
-		            out2.printf("<p>%d의 성적 정보가 없습니다.</p>\n", no);
-		        }
+		%>
+		<p><%=no%>의 성적 정보가 없습니다.
+		</p>
+		<%
+		    }
 		    } catch (Exception e) {
 		        e.printStackTrace();
-		        out.println(e.getMessage());
+		%>
+		<%=e.getMessage()%>
+		<%
 		    }
 		%>
 		<p>
 			<a href='list.jsp' class='btn btn-info btn-sm'>목록</a>
 		</p>
-		<%
-		    out.flush();
-		    rd = request.getRequestDispatcher("/footer");
-		    rd.include(request, response);
-		%>
+		 <jsp:include page="/footer.jsp"/>
 	</div>
 
-	<script src='../node_modules/jquery/dist/jquery.slim.min.js'></script>
-	<script src='../node_modules/popper.js/dist/umd/popper.min.js'></script>
-	<script src='../node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
+	<%@ include file="../jslib.txt"%>
 </body>
 </html>

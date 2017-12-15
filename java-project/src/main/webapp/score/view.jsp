@@ -17,11 +17,7 @@
 </head>
 <body>
 	<div class='container'>
-		<%
-		    out.flush();
-		    RequestDispatcher rd = request.getRequestDispatcher("/header");
-		    rd.include(request, response);
-		%>
+		<jsp:include page="/header.jsp"/>
 		<h1>성적 상세정보</h1>
 
 		<%
@@ -32,80 +28,83 @@
 		        PrintWriter out2 = new PrintWriter(out);
 
 		        if (score != null) {
-		            out.println("<form action='update.jsp' method='POST'>");
-		            out.println("<div class='form-group row'>");
-		            out.println("<label for='no' class='col-sm-2 col-form-label'>번호</label>");
-		            out.println("<div class='col-sm-10'>");
-		            out2.printf("<input class='form-control' readonly id='no' type='number' name='no' value='%d'>\n",
-		                    score.getNo());
-		            out.println("</div>");
-		            out.println("</div>");
-		            out.println("<div class='form-group row'>");
-		            out.println("<label for='name' class='col-sm-2 col-form-label'>이름</label>");
-		            out.println("<div class='col-sm-10'>");
-		            out2.printf("<input class='form-control' id='name' type='text' name='name' value='%s'>\n",
-		                    score.getName());
-		            out.println("</div>");
-		            out.println("</div>");
-		            out.println("<div class='form-group row'>");
-		            out.println("<label for='kor' class='col-sm-2 col-form-label'>국어</label>");
-		            out.println("<div class='col-sm-10'>");
-		            out2.printf("<input class='form-control' id='kor' type='number' name='kor' value='%d'>\n",
-		                    score.getKor());
-		            out.println("</div>");
-		            out.println("</div>");
-		            out.println("<div class='form-group row'>");
-		            out.println("<label for='eng' class='col-sm-2 col-form-label'>영어</label>");
-		            out.println("<div class='col-sm-10'>");
-		            out2.printf("<input class='form-control' id='eng' type='number' name='eng' value='%d'>\n",
-		                    score.getEng());
-		            out.println("</div>");
-		            out.println("</div>");
-		            out.println("<div class='form-group row'>");
-		            out.println("<label for='math' class='col-sm-2 col-form-label'>수학</label>");
-		            out.println("<div class='col-sm-10'>");
-		            out2.printf("<input class='form-control' id='math' type='number' name='math' value='%d'>\n",
-		                    score.getMath());
-		            out.println("</div>");
-		            out.println("</div>");
-		            out.println("<div class='form-group row'>");
-		            out.println("<label for='sum' class='col-sm-2 col-form-label'>합계</label>");
-		            out.println("<div class='col-sm-10'>");
-		            out2.printf("<input class='form-control' readonly id='sum' type='text' value='%d'>\n",
-		                    score.getSum());
-		            out.println("</div>");
-		            out.println("</div>");
-		            out.println("<div class='form-group row'>");
-		            out.println("<label for='aver' class='col-sm-2 col-form-label'>평균</label>");
-		            out.println("<div class='col-sm-10'>");
-		            out2.printf(
-		                    "<input class='form-control' readonly id='aver' type='text' name='aver' value='%.1f'>\n",
-		                    score.getAver());
-		            out.println("</div>");
-		            out.println("</div>");
-		            out.println("<div class='form-group row'>");
-		            out.println("<div class='col-sm-10'>");
-		            out.println("<button class='btn btn btn-warning btn-sm'>변경</button>");
-		            out2.printf("<a href='delete.jsp?no=%d' class='btn btn btn-danger btn-sm'>삭제</a>", score.getNo());
-		            out.println("</div>");
-		            out.println("</div>");
-		            out.println("</form>");
+		            %>
+		<form action='update.jsp' method='POST'>
+			<div class='form-group row'>
+				<label for='no' class='col-sm-2 col-form-label'>번호</label>
+				<div class='col-sm-10'>
+					<input class='form-control' readonly id='no' type='number'
+						name='no' value='<%=score.getNo()%>'>
+				</div>
+			</div>
+			<div class='form-group row'>
+				<label for='name' class='col-sm-2 col-form-label'>이름</label>
+				<div class='col-sm-10'>
+					<input class='form-control' id='name' type='text' name='name'
+						value='<%=score.getName()%>'>
+				</div>
+			</div>
+			<div class='form-group row'>
+				<label for='kor' class='col-sm-2 col-form-label'>국어</label>
+				<div class='col-sm-10'>
+					<input class='form-control' id='kor' type='number' name='kor'
+						value='<%=score.getKor()%>'>
+				</div>
+			</div>
+			<div class='form-group row'>
+				<label for='eng' class='col-sm-2 col-form-label'>영어</label>
+				<div class='col-sm-10'>
+					<input class='form-control' id='eng' type='number' name='eng'
+						value='<%=score.getEng()%>'>
+				</div>
+			</div>
+			<div class='form-group row'>
+				<label for='math' class='col-sm-2 col-form-label'>수학</label>
+				<div class='col-sm-10'>
+					<input class='form-control' id='math' type='number' name='math'
+						value='<%=score.getMath()%>'>
+				</div>
+			</div>
+			<div class='form-group row'>
+				<label for='sum' class='col-sm-2 col-form-label'>합계</label>
+				<div class='col-sm-10'>
+					<input class='form-control' readonly id='sum' type='text'
+						value='<%=score.getSum()%>'>
+				</div>
+			</div>
+			<div class='form-group row'>
+				<label for='aver' class='col-sm-2 col-form-label'>평균</label>
+				<div class='col-sm-10'>
+					<input class='form-control' readonly id='aver' type='text'
+						name='aver' value='<%=score.getAver()%>'>
+				</div>
+			</div>
+			<div class='form-group row'>
+				<div class='col-sm-10'>
+					<button class='btn btn btn-warning btn-sm'>변경</button>
+					<a href='delete.jsp?no=<%=score.getNo()%>'
+						class='btn btn btn-danger btn-sm'>삭제</a>
+				</div>
+			</div>
+		</form>
 
+		<%
 		        } else {
-		            out2.printf("<p>%s의 성적 정보가 없습니다.</p>", no);
+		            %>
+		<p><%=no%>의 성적 정보가 없습니다.
+		</p>
+		<%
 		        }
 		    } catch (Exception e) {
 		        e.printStackTrace();
-		        out.println(e.getMessage());
-		    }
-		    out.flush();
-		    rd = request.getRequestDispatcher("/footer");
-		    rd.include(request, response);
+		        %>
+		<%=e.getMessage()%>
+		<%
+		            }
 		%>
+		    <jsp:include page="/footer.jsp"/>
 	</div>
 
-	<script src='../node_modules/jquery/dist/jquery.slim.min.js'></script>
-	<script src='../node_modules/popper.js/dist/umd/popper.min.js'></script>
-	<script src='../node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
+	<%@ include file="../jslib.txt" %>
 </body>
 </html>

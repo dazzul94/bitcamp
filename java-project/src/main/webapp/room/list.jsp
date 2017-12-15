@@ -19,11 +19,7 @@
 <body>
 	<div class='container'>
 
-		<%
-		    out.flush();
-		    RequestDispatcher rd = request.getRequestDispatcher("/header");
-		    rd.include(request, response);
-		%>
+		<jsp:include page="/header.jsp"/>
 		<h1>강의실 목록</h1>
 		<p>
 			<a href='form.jsp' class='btn btn-primary btn-sm'>추가</a>
@@ -33,7 +29,7 @@
 				<tr>
 					<th>번호</th>
 					<th>위치</th>
-					<th>이름</th>
+					<th>강의실명</th>
 					<th>수용인원</th>
 					<th>삭제</th>
 				</tr>
@@ -43,29 +39,30 @@
 				<%
 				    try {
 				        List<Room> list = roomDao.selectList();
-
-				        PrintWriter out2 = new PrintWriter(out);
 				        for (Room room : list) {
-				            out2.printf("<tr><td>%d</td><td>%s</td><td>%s</td>"
-				                    + "<td>%d</td><td><a href='delete.jsp?no=%d' class='btn btn btn-danger btn-sm'>삭제</a></td></tr>\n",
-				                    room.getNo(), room.getLocation(), room.getName(), room.getCapacity(), room.getNo());
-				        }
+				%>
+				<tr>
+					<td><%=room.getNo()%></td>
+					<td><%=room.getLocation()%></td>
+					<td><%=room.getName()%></td>
+					<td><%=room.getCapacity()%></td>
+					<td><a href='delete.jsp?no=<%=room.getNo()%>'
+						class='btn btn btn-danger btn-sm'>삭제</a></td>
+				</tr>
+				<%
+				    }
 
 				    } catch (Exception e) {
 				        e.printStackTrace(); // for developer
-				        out.println(e.getMessage()); // for user
+				%>
+				<%=e.getMessage()%>
+				<%
 				    }
 				%>
 			</tbody>
 		</table>
-		<%
-		    out.flush();
-		    rd = request.getRequestDispatcher("/footer");
-		    rd.include(request, response);
-		%>
+		<jsp:include page="/footer.jsp"/>
 	</div>
-	<script src='../node_modules/jquery/dist/jquery.slim.min.js'></script>
-	<script src='../node_modules/popper.js/dist/umd/popper.min.js'></script>
-	<script src='../node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
+	<%@ include file="../jslib.txt" %>
 </body>
 </html>

@@ -21,11 +21,7 @@
 <body>
 	<div class='container'>
 
-		<%
-		    out.flush();
-		    RequestDispatcher rd = request.getRequestDispatcher("/header");
-		    rd.include(request, response);
-		%>
+		<jsp:include page="/header.jsp"/>
 		<h1>게시물 목록</h1>
 		<p>
 			<a href='form.jsp' class='btn btn-primary btn-sm'>추가</a>
@@ -44,29 +40,30 @@
 				<%
 				    try {
 				        List<Board> list = boardDao.selectList();
-				        PrintWriter out2 = new PrintWriter(out);
 				        for (Board board : list) {
-				            out2.printf(
-				                    "<tr><td>%d</td><td>" + "<a href='view.jsp?no=%d'>%s</a>"
-				                            + "</td><td>%s</td><td>%d</td></tr>\n",
-				                    board.getNo(), board.getNo(), board.getTitle(), board.getRegDate(), board.getViewCount());
-				        }
+				%>
+				<tr>
+					<td><%=board.getNo()%></td>
+					<td><a href='view.jsp?no=<%=board.getNo()%>'><%=board.getTitle()%></a></td>
+					<td><%=board.getRegDate()%></td>
+					<td><%=board.getViewCount()%></td>
+				</tr>
+				<%
+				    }
+
 				    } catch (Exception e) {
-				        e.printStackTrace();
-				        out.println(e.getMessage());
+				        e.printStackTrace(); // for developer
+				%>
+				<%=e.getMessage()%>
+				<%
 				    }
 				%>
+
 			</tbody>
 		</table>
-		<%
-		    out.flush();
-		    rd = request.getRequestDispatcher("/footer");
-		    rd.include(request, response);
-		%>
-	</div>
+		<jsp:include page="/footer.jsp"/>
 
-	<script src='../node_modules/jquery/dist/jquery.slim.min.js'></script>
-	<script src='../node_modules/popper.js/dist/umd/popper.min.js'></script>
-	<script src='../node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
+	</div>
+<%@ include file="../jslib.txt" %>
 </body>
 </html>
