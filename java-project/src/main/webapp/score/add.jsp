@@ -11,6 +11,7 @@
 <link rel='stylesheet'
 	href='../node_modules/bootstrap/dist/css/bootstrap.min.css'>
 <link rel='stylesheet' href='../css/common.css'>
+<meta http-equiv='Refresh' content='1; url=list.jsp'>
 </head>
 <body>
 	<div class='container'>
@@ -42,5 +43,6 @@
 		 <jsp:include page="/footer.jsp"/>
 	</div>
 	<%@ include file="../jslib.txt" %>
+	
 </body>
 </html>
