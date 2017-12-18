@@ -6,10 +6,6 @@
 <%@page import="java100.app.dao.BoardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-
-<%
-    BoardDao boardDao = ContextLoaderListener.iocContainer.getBean(BoardDao.class);
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,17 +32,18 @@
 				</tr>
 			</thead>
 			<tbody>
-
+<jsp:useBean id="list" type="java.util.List<Board>" scope="request"></jsp:useBean>
 				<%
 				    try {
-				        List<Board> list = boardDao.selectList();
+
 				        for (Board board : list) {
+				            pageContext.setAttribute("board",board);
 				%>
 				<tr>
-					<td><%=board.getNo()%></td>
-					<td><a href='view.jsp?no=<%=board.getNo()%>'><%=board.getTitle()%></a></td>
-					<td><%=board.getRegDate()%></td>
-					<td><%=board.getViewCount()%></td>
+					<td>${board.no}</td>
+					<td><a href='view?no=${board.no}'>${board.title}</a></td>
+					<td>${board.regDate}</td>
+					<td>${board.viewCount}</td>
 				</tr>
 				<%
 				    }

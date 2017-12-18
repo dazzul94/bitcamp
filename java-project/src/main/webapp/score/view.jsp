@@ -1,12 +1,6 @@
-<%@page import="java.io.PrintWriter"%>
 <%@page import="java100.app.domain.Score"%>
-<%@page import="java100.app.listener.ContextLoaderListener"%>
-<%@page import="java100.app.dao.ScoreDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-<%
-    ScoreDao scoreDao = ContextLoaderListener.iocContainer.getBean(ScoreDao.class);
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,38 +11,34 @@
 </head>
 <body>
 	<div class='container'>
-		<jsp:include page="/header.jsp"/>
+		<jsp:include page="/header.jsp" />
 		<h1>성적 상세정보</h1>
-
+		<jsp:useBean id="score" type="java100.app.domain.Score" scope="request"></jsp:useBean>
 		<%
 		    try {
-		        int no = Integer.parseInt(request.getParameter("no"));
-
-		        Score score = scoreDao.selectOne(no);
-		        PrintWriter out2 = new PrintWriter(out);
 
 		        if (score != null) {
-		            %>
-		<form action='update.jsp' method='POST'>
+		%>
+		<form action='update' method='POST'>
 			<div class='form-group row'>
 				<label for='no' class='col-sm-2 col-form-label'>번호</label>
 				<div class='col-sm-10'>
 					<input class='form-control' readonly id='no' type='number'
-						name='no' value='<%=score.getNo()%>'>
+						name='no' value='${score.no}'>
 				</div>
 			</div>
 			<div class='form-group row'>
 				<label for='name' class='col-sm-2 col-form-label'>이름</label>
 				<div class='col-sm-10'>
 					<input class='form-control' id='name' type='text' name='name'
-						value='<%=score.getName()%>'>
+						value='${score.name}'>
 				</div>
 			</div>
 			<div class='form-group row'>
 				<label for='kor' class='col-sm-2 col-form-label'>국어</label>
 				<div class='col-sm-10'>
 					<input class='form-control' id='kor' type='number' name='kor'
-						value='<%=score.getKor()%>'>
+						value='${score.kor}'>
 				</div>
 			</div>
 			<div class='form-group row'>
@@ -62,49 +52,48 @@
 				<label for='math' class='col-sm-2 col-form-label'>수학</label>
 				<div class='col-sm-10'>
 					<input class='form-control' id='math' type='number' name='math'
-						value='<%=score.getMath()%>'>
+						value='${score.math}'>
 				</div>
 			</div>
 			<div class='form-group row'>
 				<label for='sum' class='col-sm-2 col-form-label'>합계</label>
 				<div class='col-sm-10'>
 					<input class='form-control' readonly id='sum' type='text'
-						value='<%=score.getSum()%>'>
+						value='${score.sum}'>
 				</div>
 			</div>
 			<div class='form-group row'>
 				<label for='aver' class='col-sm-2 col-form-label'>평균</label>
 				<div class='col-sm-10'>
 					<input class='form-control' readonly id='aver' type='text'
-						name='aver' value='<%=score.getAver()%>'>
+						name='aver' value='${score.aver}'>
 				</div>
 			</div>
 			<div class='form-group row'>
 				<div class='col-sm-10'>
 					<button class='btn btn btn-warning btn-sm'>변경</button>
-					<a href='delete.jsp?no=<%=score.getNo()%>'
+					<a href='delete?no=<%=score.getNo()%>'
 						class='btn btn btn-danger btn-sm'>삭제</a>
 				</div>
 			</div>
 		</form>
 
 		<%
-		        } else {
-		            %>
-		<p><%=no%>의 성적 정보가 없습니다.
-		</p>
+		    } else {
+		%>
+		<p>'${param.no}'의 성적 정보가 없습니다.</p>
 		<%
-		        }
+		    }
 		    } catch (Exception e) {
 		        e.printStackTrace();
-		        %>
+		%>
 		<%=e.getMessage()%>
 		<%
-		            }
+		    }
 		%>
-		    <jsp:include page="/footer.jsp"/>
+		<jsp:include page="/footer.jsp" />
 	</div>
 
-	<%@ include file="../jslib.txt" %>
+	<%@ include file="../jslib.txt"%>
 </body>
 </html>

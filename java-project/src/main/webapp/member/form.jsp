@@ -14,7 +14,7 @@
 	<div class='container'>
 		<jsp:include page="/header.jsp"/>
 		<h1>회원 등록</h1>
-		<form action="add.jsp" method='POST'>
+		<form action="add" method='POST'>
 			<div class='form-group row'>
 				<label for='name' class='col-sm-2 col-form-label'>이름</label>
 				<div class='col-sm-10'>

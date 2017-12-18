@@ -15,32 +15,15 @@
 <link rel='stylesheet'
 	href='../node_modules/bootstrap/dist/css/bootstrap.min.css'>
 <link rel='stylesheet' href='../css/common.css'>
-<meta http-equiv='Refresh' content='1; url=list.jsp'>
+<meta http-equiv='Refresh' content='1; url=list'>
 </head>
 <body>
 	<div class='container'>
 		<jsp:include page="/header.jsp"/>
 		<h1>게시물 등록 결과</h1>
-		<%
-		    try {
-		        Board board = new Board();
-		        board.setTitle(request.getParameter("title"));
-		        board.setContent(request.getParameter("conts"));
-
-		        boardDao.insert(board);
-		%>
 		<p>저장하였습니다.</p>
-		<%
-		    } catch (Exception e) {
-		        e.printStackTrace(); // for developer
-		%>
-		<%=e.getMessage()%>
-		<%
-		    }
-		%>
-
 		<p>
-			<a href='list.jsp' class='btn btn-primary btn-sm'>목록</a>
+			<a href='list' class='btn btn-primary btn-sm'>목록</a>
 		</p>
 		<jsp:include page="/footer.jsp"/>
 	</div>

@@ -15,23 +15,22 @@
 <link rel='stylesheet'
 	href='../node_modules/bootstrap/dist/css/bootstrap.min.css'>
 <link rel='stylesheet' href='../css/common.css'>
+<meta http-equiv='Refresh' content='1; url=list'>
 </head>
 <body>
 	<div class='container'>
 		<jsp:include page="/header.jsp"/>
 		<h1>회원 변경</h1>
+		<jsp:useBean id="count" type="java.lang.Integer" scope="request"></jsp:useBean>
 		<%
 		    try {
-		        Member member = new Member(Integer.parseInt(request.getParameter("no")), request.getParameter("name"),
-		                request.getParameter("email"), request.getParameter("password"));
-
-		        if (memberDao.update(member) > 0) {
+		        if (count > 0) {
 		%>
 		<p>변경했습니다</p>
 		<%
 		    } else {
 		%>
-		<p><%=member.getNo()%>의 회원 정보가 없습니다.
+		<p>'${member.no}'의 회원 정보가 없습니다.
 		</p>
 		<%
 		    }
@@ -43,7 +42,7 @@
 		    }
 		%>
 		<p>
-			<a href='list.jsp' class='btn btn-info btn-sm'>목록</a>
+			<a href='list' class='btn btn-info btn-sm'>목록</a>
 		</p>
 
 		<jsp:include page="/footer.jsp"/>

@@ -15,26 +15,23 @@
 <link rel='stylesheet'
 	href='../node_modules/bootstrap/dist/css/bootstrap.min.css'>
 <link rel='stylesheet' href='../css/common.css'>
+<meta http-equiv='Refresh' content='1; url=list'>
 </head>
 <body>
 	<div class='container'>
 
 		<jsp:include page="/header.jsp"/>
 		<h1>게시물 변경</h1>
+		<jsp:useBean id="count" type="java.lang.Integer" scope="request"></jsp:useBean>
 		<%
 		    try {
-		        Board board = new Board();
-		        board.setTitle(request.getParameter("title"));
-		        board.setContent(request.getParameter("conts"));
-		        board.setNo(Integer.parseInt(request.getParameter("no")));
-
-		        if (boardDao.update(board) > 0) {
+		        if (count > 0) {
 		%>
 		<p>변경했습니다</p>
 		<%
 		    } else {
 		%>
-		<p><%=board.getNo()%>의 게시물 정보가 없습니다.
+		<p>'${board.no}의 게시물 정보가 없습니다.
 		</p>
 		<%
 		    }
@@ -47,7 +44,7 @@
 		    }
 		%>
 		<p>
-			<a href='list.jsp' class='btn btn-info btn-sm'>목록</a>
+			<a href='list' class='btn btn-info btn-sm'>목록</a>
 		</p>
 		<jsp:include page="/footer.jsp"/>
 	</div>

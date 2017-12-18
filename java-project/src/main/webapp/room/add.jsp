@@ -1,11 +1,5 @@
-<%@page import="java100.app.domain.Room"%>
-<%@page import="java100.app.listener.ContextLoaderListener"%>
-<%@page import="java100.app.dao.RoomDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-<%
-    RoomDao roomDao = ContextLoaderListener.iocContainer.getBean(RoomDao.class);
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,32 +7,15 @@
 <link rel='stylesheet'
 	href='../node_modules/bootstrap/dist/css/bootstrap.min.css'>
 <link rel='stylesheet' href='../css/common.css'>
-<meta http-equiv='Refresh' content='1; url=list.jsp'>
+<meta http-equiv='Refresh' content='1; url=list'>
 </head>
 <body>
 	<div class='container'>
 		<jsp:include page="/header.jsp"/>
 		<h1>강의실 등록 결과</h1>
-		<%
-		    try {
-		        Room room = new Room();
-		        room.setName(request.getParameter("name"));
-		        room.setLocation(request.getParameter("location"));
-		        room.setCapacity(Integer.parseInt(request.getParameter("capacity")));
-
-		        roomDao.insert(room);
-		%>
 		<p>저장하였습니다.</p>
-		<%
-		    } catch (Exception e) {
-		        e.printStackTrace(); // for developer
-		%>
-		<%=e.getMessage()%>
-		<%
-		    }
-		%>
 		<p>
-			<a href='list.jsp' class='btn btn-info btn-sm'>목록</a>
+			<a href='list' class='btn btn-info btn-sm'>목록</a>
 		</p>
 		 <jsp:include page="/footer.jsp"/>
 	</div>

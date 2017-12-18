@@ -1,12 +1,6 @@
-<%@page import="java.io.PrintWriter"%>
-<%@page import="java100.app.listener.ContextLoaderListener"%>
-<%@page import="java100.app.dao.ScoreDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 
-<%
-    ScoreDao scoreDao = ContextLoaderListener.iocContainer.getBean(ScoreDao.class);
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,23 +8,24 @@
 <link rel='stylesheet'
 	href='../node_modules/bootstrap/dist/css/bootstrap.min.css'>
 <link rel='stylesheet' href='../css/common.css'>
+<meta http-equiv='Refresh' content='1; url=list'>
 </head>
 <body>
 	<div class='container'>
 
 		<jsp:include page="/header.jsp"/>
 		<h1>성적 삭제</h1>
+		<jsp:useBean id="count" type="java.lang.Integer" scope="request"></jsp:useBean>
+		
 		<%
 		    try {
-		        int no = Integer.parseInt(request.getParameter("no"));
-		        if (scoreDao.delete(no) > 0) {
+		        if (count > 0) {
 		%>
 		<p>삭제했습니다</p>
 		<%
 		    } else {
-		            PrintWriter out2 = new PrintWriter(out);
 		%>
-		<p><%=no%>의 성적 정보가 없습니다.
+		<p>'${param.no}'의 성적 정보가 없습니다.
 		</p>
 		<%
 		    }
@@ -42,7 +37,7 @@
 		    }
 		%>
 		<p>
-			<a href='list.jsp' class='btn btn-info btn-sm'>목록</a>
+			<a href='list' class='btn btn-info btn-sm'>목록</a>
 		</p>
 		 <jsp:include page="/footer.jsp"/>
 	</div>
