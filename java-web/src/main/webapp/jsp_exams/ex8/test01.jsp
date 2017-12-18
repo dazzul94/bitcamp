@@ -12,23 +12,27 @@
 <body>
 <h1>EL(Expression Language) 사용법</h1>
 OGNL 표기법을 이용하여 자바 객체의 프로퍼티 값을 꺼내는 문법이다.<br>
-OGNL(Object Graph Navigation Language)이란?<br>
-점(.)이나 대괄호([]) 등을 이용하여 객체의 변수 값을 쉽게 꺼내게 해주는 문법이다 .
+OGNL(Object Graph Navigation Language) 이란?<br>
+점(.)이나 대괄호([]) 등을 이용하여 객체의 변수 값을 쉽게 꺼내게 해주는 문법이다.
 
-<% 
-pageContext.setAttribute("name", "홍길동");
-pageContext.setAttribute("age", 20);
-pageContext.setAttribute("working", true);
-%>
+<h2>기본 표기법</h2>
+${객체이름.프로퍼티명} 또는 ${객체이름["프로퍼티명"]}<br>
+
+<%-- 
+예1)
+자바 => map.get("name")
+EL   => ${map.name} 또는 ${map["name"]} 
+
+예2)
+자바 => member.getFirstName()
+EL   => ${member.firstName} 또는 ${member["firstName"]}
+
+예3)
+자바 => car.getEngine().getName()
+EL   => ${car.engine.name} 또는 ${car["engine"]["name"]}
 
 
-<h2>pageContext에서 값 꺼내기</h2>
-${pageScope.name} <br>
-${pageScope.age} <br>
-${pageScope.working} <br>
-
-<% Cookie[] cookies = request.getCookies(); %>
-
+--%>
 </body>
 </html>
 
