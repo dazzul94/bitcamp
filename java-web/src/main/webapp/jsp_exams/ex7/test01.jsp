@@ -13,7 +13,6 @@
 <h1>JSP 내장 변수(built-in objects)</h1>
 JSP로 생성한 서블릿 클래스의 _jspService() 메서드에서 반드시 
 선언되어 있어야할 객체</br>
-
 <pre>
 1) request:HttpServletRequest, 
 2) response:HttpServletResponse
