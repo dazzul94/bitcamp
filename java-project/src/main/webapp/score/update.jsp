@@ -1,6 +1,6 @@
-<%@page import="java100.app.domain.Score"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
@@ -14,35 +14,20 @@
 <body>
 	<div class='container'>
 
-		<jsp:include page="/header.jsp"/>
+		<jsp:include page="/header.jsp" />
 		<h1>성적 변경</h1>
-    <jsp:useBean id="count" type="java.lang.Integer" scope="request"></jsp:useBean>
-		<%
-		    try {
-		        if (count > 0) {
-		%>
-		<p>변경했습니다</p>
-		<%
-		    } else {
-		%>
-		<p>'${param.no}의 게시물 정보가 없습니다.
-		</p>
-		<%
-		    }
-
-		    } catch (Exception e) {
-		        e.getMessage();
-		%>
-		<%=e.getMessage()%>
-		<%
-		    }
-		%>
+		<c:if test="${count > 0}">
+			<p>변경했습니다</p>
+		</c:if>
+		<c:if test="${count == 0 }">
+			<p>'${param.no}의 게시물 정보가 없습니다.</p>
+		</c:if>
 		<p>
 			<a href='list' class='btn btn-info btn-sm'>목록</a>
 		</p>
-		 <jsp:include page="/footer.jsp"/>
+		<jsp:include page="/footer.jsp" />
 	</div>
 
-	<%@ include file="../jslib.txt" %>
+	<%@ include file="../jslib.txt"%>
 </body>
 </html>

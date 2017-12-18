@@ -1,63 +1,53 @@
-<%@page import="java.io.PrintWriter"%>
-<%@page import="java100.app.domain.Score"%>
-<%@page import="java.util.List"%>
-<%@ page language="java" 
-    contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"
-    trimDirectiveWhitespaces="true"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <title>성적관리</title>
-<link rel='stylesheet' href='../node_modules/bootstrap/dist/css/bootstrap.min.css'>
+<link rel='stylesheet'
+	href='../node_modules/bootstrap/dist/css/bootstrap.min.css'>
 <link rel='stylesheet' href='../css/common.css'>
 </head>
 <body>
-<div class='container'>
+	<div class='container'>
 
-<jsp:include page="/header.jsp"/>
+		<jsp:include page="/header.jsp" />
 
-<h1>성적 목록</h1>
+		<h1>성적 목록</h1>
 
-<p><a href='form.jsp' class='btn btn-primary btn-sm'>추가</a></p>
+		<p>
+			<a href='form.jsp' class='btn btn-primary btn-sm'>추가</a>
+		</p>
 
-<table class='table table-hover'>
-<thead>
-<tr>
-<th>번호</th><th>이름</th><th>합계</th><th>평균</th>
-</tr>
-</thead>
-<tbody>
-<jsp:useBean id="list" type="java.util.List<Score>" scope="request"></jsp:useBean>
-<%
-try {
-    for (Score score : list) {
-        pageContext.setAttribute("score", score);
-%>
-    <tr>
-        <td>${score.no}</td>
-        <td><a href='view?no=${score.no}'>${score.name}</a></td>
-        <td>${score.sum}</td>
-        <td>${score.aver}</td>
-    </tr>
-<%
-    }
-    
-} catch (Exception e) {
-    e.printStackTrace(); // for developer%>
-    <%=e.getMessage()%>
-<%
-}%>
+		<table class='table table-hover'>
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>이름</th>
+					<th>합계</th>
+					<th>평균</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${list}" var="score">
+					<tr>
+						<td>${score.no}</td>
+						<td><a href='view?no=${score.no}'>${score.name}</a></td>
+						<td>${score.sum}</td>
+						<td>${score.aver}</td>
+					</tr>
+				</c:forEach>
 
-</tbody>
-</table>
 
-<jsp:include page="/footer.jsp"/>
+			</tbody>
+		</table>
 
-</div>
+		<jsp:include page="/footer.jsp" />
 
-<%@ include file="../jslib.txt"%>
+	</div>
+
+	<%@ include file="../jslib.txt"%>
 
 </body>
 </html>

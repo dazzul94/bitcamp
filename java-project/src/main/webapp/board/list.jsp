@@ -1,11 +1,6 @@
-
-<%@page import="java.io.PrintWriter"%>
-<%@page import="java100.app.domain.Board"%>
-<%@page import="java.util.List"%>
-<%@page import="java100.app.listener.ContextLoaderListener"%>
-<%@page import="java100.app.dao.BoardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +12,7 @@
 <body>
 	<div class='container'>
 
-		<jsp:include page="/header.jsp"/>
+		<jsp:include page="/header.jsp" />
 		<h1>게시물 목록</h1>
 		<p>
 			<a href='form.jsp' class='btn btn-primary btn-sm'>추가</a>
@@ -32,35 +27,19 @@
 				</tr>
 			</thead>
 			<tbody>
-<jsp:useBean id="list" type="java.util.List<Board>" scope="request"></jsp:useBean>
-				<%
-				    try {
-
-				        for (Board board : list) {
-				            pageContext.setAttribute("board",board);
-				%>
-				<tr>
-					<td>${board.no}</td>
-					<td><a href='view?no=${board.no}'>${board.title}</a></td>
-					<td>${board.regDate}</td>
-					<td>${board.viewCount}</td>
-				</tr>
-				<%
-				    }
-
-				    } catch (Exception e) {
-				        e.printStackTrace(); // for developer
-				%>
-				<%=e.getMessage()%>
-				<%
-				    }
-				%>
-
+				<c:forEach items="${list}" var="board">
+					<tr>
+						<td>${board.no}</td>
+						<td><a href='view?no=${board.no}'>${board.title}</a></td>
+						<td>${board.regDate}</td>
+						<td>${board.viewCount}</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
-		<jsp:include page="/footer.jsp"/>
+		<jsp:include page="/footer.jsp" />
 
 	</div>
-<%@ include file="../jslib.txt" %>
+	<%@ include file="../jslib.txt"%>
 </body>
 </html>

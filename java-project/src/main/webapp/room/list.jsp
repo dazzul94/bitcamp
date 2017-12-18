@@ -1,10 +1,6 @@
-<%@page import="java.io.PrintWriter"%>
-<%@page import="java100.app.domain.Room"%>
-<%@page import="java.util.List"%>
-<%@page import="java100.app.listener.ContextLoaderListener"%>
-<%@page import="java100.app.dao.RoomDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +15,7 @@
 		<jsp:include page="/header.jsp" />
 		<h1>강의실 목록</h1>
 		<p>
-			<a href='form.jsp' class='btn btn-primary btn-sm'>추가</a>
+			<a href='form' class='btn btn-primary btn-sm'>추가</a>
 		</p>
 		<table class='table table-sm'>
 			<thead>
@@ -32,12 +28,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<jsp:useBean id="list" type="java.util.List<Room>" scope="request"></jsp:useBean>
-				<%
-				    try {
-				        for (Room room : list) {
-				            pageContext.setAttribute("room", room);
-				%>
+			<c:forEach items="${list}" var="room">
 				<tr>
 					<td>${room.no}</td>
 					<td>${room.location}</td>
@@ -46,16 +37,7 @@
 					<td><a href='delete?no=${room.no}'
 						class='btn btn btn-danger btn-sm'>삭제</a></td>
 				</tr>
-				<%
-				    }
-
-				    } catch (Exception e) {
-				        e.printStackTrace(); // for developer
-				%>
-				<%=e.getMessage()%>
-				<%
-				    }
-				%>
+				</c:forEach>
 			</tbody>
 		</table>
 		<jsp:include page="/footer.jsp" />
