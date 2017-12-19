@@ -18,24 +18,29 @@
 
 <h2>Core 라이브러리</h2>
 
-<h3>c:import 태그</h3>
+<h3>c:forTokens 태그</h3>
 <p>
-HTTP 요청을 수행하는 태그이다.<br>
+특정 구분자로 분리된 문자열을 전문적으로 처리하는 태그이다. <br>
 <%--
-<c:import url="요청 URL" var="결과 값을 저장할 때 사용할 이름"/>
+<c:forTokens var="변수명" items="문자열 또는 EL 리턴값" delims="구분자">
+  ....  
+</c:forTokens>
 --%>
 </p>
 
-<c:url var="url" value="http://m.zdnet.co.kr/news_view.asp">
-  <c:param name="artice_id" value="20171218185836"/>
-  <c:param name="lo" value="z36"/>
-</c:url>
+<p>
+<c:forTokens items="홍길동,유관순,임꺽정,안중근,윤봉길,김구" 
+             var="item" delims=",">
+  ${item},
+</c:forTokens>
+</p>
 
-<%-- 서버에 받은 결과는 var에 지정된 result라는 이름을 저장한다. --%>
-<c:import url="${url}" var="result"/>
-
-<textarea rows="15" cols="80">${result}</textarea>
-
+<p>
+<c:forTokens items="name=홍길동&age=20&working=true" 
+             var="item" delims="&">
+  ${item},
+</c:forTokens>
+</p>
 
 <br><br><br><br><br><br><br><br><br><br><br>
 </body>

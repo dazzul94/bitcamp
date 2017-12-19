@@ -16,23 +16,19 @@
 
 <h2>Core 라이브러리</h2>
 
-<h3>c:if 태그</h3>
-<p>
-조건에 따라 실행을 여부를 결정하는 태그이다.<br>
-&lt;c:if test="EL로 작성된 조건" 
-         var="조건 검사 결과(true/false)를 저장할 변수"
-         scope="page|request|session|application"/><br>
-</p>
+<h3>c:out 태그</h3>
+<p>자바의 출력문을 생성하는 태그이다.</p>
 
-<c:set var="name" value="홍길동" scope="page"/> 
+<c:out value="출력할 값"/><br>
+<c:out value="${name}">없다면 이 값을 출력하라!</c:out><br>
+<c:out value="${name}" default="없다면 이 값을 출력하라!"/><br>
 
-<c:if test="${name == '홍길동'}" var="result">
-  오호라, 당신이 홍길동이군요!<br>
-</c:if>
+<%
+pageContext.setAttribute("name", "홍길동");
+%>
+<c:out value="${name}">없다면 이 값을 출력하라!</c:out><br>
+<c:out value="${name}" default="없다면 이 값을 출력하라!"/><br>
 
-result: ${result}
-
-<br><br><br><br><br><br><br><br><br><br><br>
 </body>
 </html>
 
