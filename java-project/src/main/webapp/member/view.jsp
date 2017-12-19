@@ -14,7 +14,7 @@
 		<jsp:include page="/header.jsp" />
 		<h1>회원 상세정보</h1>
 		<c:if test="${not empty member }">
-			<form action='update' method='POST'>
+			<form action='update.do' method='POST'>
 				<div class='form-group row'>
 					<label for='no' class='col-sm-2 col-form-label'>번호</label>
 					<div class='col-sm-10'>
@@ -37,6 +37,13 @@
 					</div>
 				</div>
 				<div class='form-group row'>
+					<label for='password' class='col-sm-2 col-form-label'>암호</label>
+					<div class='col-sm-10'>
+						<input class='form-control' id='password' type='password'
+							name='password'>
+					</div>
+				</div>
+				<div class='form-group row'>
 					<label for='regdt' class='col-sm-2 col-form-label'>등록일</label>
 					<div class='col-sm-10'>
 						<input class='form-control' readonly id='regdt' type='text'
@@ -44,7 +51,7 @@
 					</div>
 				</div>
 				<button class='btn btn-warning btn-sm'>변경</button>
-				<a href='delete?no=${member.no}' class='btn btn-danger btn-sm'>삭제</a>
+				<a href='delete.do?no=${member.no}' class='btn btn-danger btn-sm'>삭제</a>
 			</form>
 		</c:if>
 		<c:if test="${empty member }">

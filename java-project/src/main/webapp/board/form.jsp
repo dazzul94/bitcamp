@@ -12,7 +12,7 @@
 	<div class='container'>
 		<jsp:include page="/header.jsp"/>
 		<h1>게시물 등록</h1>
-		<form action="add" method='POST'>
+		<form action="add.do" method='POST'>
 			<div class='form-group row'>
 				<label for='title' class='col-sm-2 col-form-label'>제목</label>
 				<div class='col-sm-10'>

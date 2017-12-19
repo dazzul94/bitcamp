@@ -15,7 +15,7 @@
 		<jsp:include page="/header.jsp" />
 		<h1>게시물 목록</h1>
 		<p>
-			<a href='form.jsp' class='btn btn-primary btn-sm'>추가</a>
+			<a href='form.do' class='btn btn-primary btn-sm'>추가</a>
 		</p>
 		<table class='table table-sm'>
 			<thead>
@@ -30,7 +30,7 @@
 				<c:forEach items="${list}" var="board">
 					<tr>
 						<td>${board.no}</td>
-						<td><a href='view?no=${board.no}'>${board.title}</a></td>
+						<td><a href='view.do?no=${board.no}'>${board.title}</a></td>
 						<td>${board.regDate}</td>
 						<td>${board.viewCount}</td>
 					</tr>

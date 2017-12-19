@@ -14,7 +14,7 @@
 		<jsp:include page="/header.jsp" />
 		<h1>게시물 상세정보</h1>
 		<c:if test="${not empty board }">
-			<form action='update' method='POST'>
+			<form action='update.do' method='POST'>
 				<div class='form-group row'>
 					<label for='no' class='col-sm-2 col-form-label'>번호</label>
 					<div class='col-sm-10'>
@@ -53,7 +53,7 @@
 					</div>
 				</div>
 				<button class='btn btn-warning btn-sm'>변경</button>
-				<a href='delete?no=${board.no}' class='btn btn-danger btn-sm'>삭제</a>
+				<a href='delete.do?no=${board.no}' class='btn btn-danger btn-sm'>삭제</a>
 			</form>
 		</c:if>
 		<c:if test="${empty board }">
