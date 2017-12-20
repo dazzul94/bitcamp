@@ -17,12 +17,8 @@ public class RoomAddController {
     RoomDao roomDao;
 
     @RequestMapping
-    public String add(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        Room room = new Room();
-        room.setName(request.getParameter("name"));
-        room.setLocation(request.getParameter("location"));
-        room.setCapacity(Integer.parseInt(request.getParameter("capacity")));
+    public String add(Room room,
+                      HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         roomDao.insert(room);
         return "redirect:list.do";// DispatcherServlet이 쓸거

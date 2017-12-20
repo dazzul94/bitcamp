@@ -17,12 +17,9 @@ public class BoardAddController {
     BoardDao boardDao;
     
     @RequestMapping
-    public String add(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String add(Board board,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
        
-        Board board = new Board();
-        board.setTitle(request.getParameter("title"));
-        board.setContent(request.getParameter("conts"));
-
         boardDao.insert(board);
         return "redirect:list.do";//DispatcherServlet이 쓸거
     }

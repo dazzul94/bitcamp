@@ -16,13 +16,9 @@ public class BoardUpdateController {
     BoardDao boardDao;
 
     @RequestMapping
-    public String update(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String update(Board board,
+                         HttpServletRequest request, HttpServletResponse response) throws Exception {
         
-        Board board = new Board();
-        board.setTitle(request.getParameter("title"));
-        board.setContent(request.getParameter("conts"));
-        board.setNo(Integer.parseInt(request.getParameter("no")));
-
         boardDao.update(board);
         return "redirect:list.do";// DispatcherServlet이 쓸거
     }

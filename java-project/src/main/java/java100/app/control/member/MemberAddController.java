@@ -17,9 +17,9 @@ public class MemberAddController {
     MemberDao memberDao;
 
     @RequestMapping
-    public String add(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Member member = new Member(request.getParameter("name"), request.getParameter("email"),
-                request.getParameter("password"));
+    public String add(Member member,
+                      HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
         memberDao.insert(member);
         return "redirect:list.do";// DispatcherServlet이 쓸거
 

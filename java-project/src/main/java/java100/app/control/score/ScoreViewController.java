@@ -18,9 +18,9 @@ public class ScoreViewController {
     ScoreDao scoreDao;
 
     @RequestMapping
-    public String view(@RequestParam("no") int no, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String view(@RequestParam("no") int no, 
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-//        int no = Integer.parseInt(request.getParameter("no"));
         Score score = scoreDao.selectOne(no);
         request.setAttribute("score", score);
         return "/score/view.jsp";// DispatcherServlet이 쓸거

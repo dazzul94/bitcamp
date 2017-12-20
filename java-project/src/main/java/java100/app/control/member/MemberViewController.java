@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java100.app.annotation.RequestMapping;
+import java100.app.annotation.RequestParam;
 import java100.app.dao.MemberDao;
 import java100.app.domain.Member;
 
@@ -17,9 +18,9 @@ public class MemberViewController {
     MemberDao memberDao;
 
     @RequestMapping
-    public String view(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String view(@RequestParam("no") int no,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        int no = Integer.parseInt(request.getParameter("no"));
         Member member = memberDao.selectOne(no);
 
         request.setAttribute("member", member);

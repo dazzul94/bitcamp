@@ -17,10 +17,9 @@ public class MemberUpdateController {
     MemberDao memberDao;
 
     @RequestMapping
-    public String update(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String update(Member member,
+                         HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        Member member = new Member(Integer.parseInt(request.getParameter("no")), request.getParameter("name"),
-                request.getParameter("email"), request.getParameter("password"));
         memberDao.update(member);
         return "redirect:list.do";// DispatcherServlet이 쓸거
     }

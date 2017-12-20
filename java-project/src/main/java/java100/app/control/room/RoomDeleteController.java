@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java100.app.annotation.RequestMapping;
+import java100.app.annotation.RequestParam;
 import java100.app.dao.RoomDao;
 
 @Component("/room/delete")
@@ -15,9 +16,9 @@ public class RoomDeleteController {
     RoomDao roomDao;
 
     @RequestMapping
-    public String delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String delete(@RequestParam("no") int no,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        int no = Integer.parseInt(request.getParameter("no"));
         roomDao.delete(no);
         return "redirect:list.do";// DispatcherServlet이 쓸거
     }

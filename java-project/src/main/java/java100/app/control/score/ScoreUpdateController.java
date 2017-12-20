@@ -17,15 +17,8 @@ public class ScoreUpdateController {
     ScoreDao scoreDao;
 
     @RequestMapping
-    public String update(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        Score score = new Score();
-
-        score.setNo(Integer.parseInt(request.getParameter("no")));
-        score.setName(request.getParameter("name"));
-        score.setKor(Integer.parseInt(request.getParameter("kor")));
-        score.setEng(Integer.parseInt(request.getParameter("eng")));
-        score.setMath(Integer.parseInt(request.getParameter("math")));
+    public String update(Score score,
+                         HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         scoreDao.update(score);
         return "redirect:list.do";// DispatcherServlet이 쓸거

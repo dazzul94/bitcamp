@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import java100.app.annotation.RequestMapping;
 import java100.app.dao.RoomDao;
 import java100.app.domain.Room;
-import java100.app.listener.ContextLoaderListener;
 
 @Component("/room/list")
 public class RoomListController {
@@ -21,7 +20,6 @@ public class RoomListController {
     @RequestMapping
     public String list(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        RoomDao roomDao = ContextLoaderListener.iocContainer.getBean(RoomDao.class);
         List<Room> list = roomDao.selectList();
 
         request.setAttribute("list", list);
