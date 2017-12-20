@@ -6,18 +6,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java100.app.control.PageController;
+import java100.app.annotation.RequestMapping;
 import java100.app.dao.RoomDao;
 import java100.app.domain.Room;
 
 @Component("/room/add")
-public class RoomAddController implements PageController {
+public class RoomAddController {
 
     @Autowired
     RoomDao roomDao;
 
-    @Override
-    public String service(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @RequestMapping
+    public String add(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         Room room = new Room();
         room.setName(request.getParameter("name"));

@@ -8,18 +8,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java100.app.control.PageController;
+import java100.app.annotation.RequestMapping;
 import java100.app.dao.MemberDao;
 import java100.app.domain.Member;
 
 @Component("/member/list")
-public class MemberListController implements PageController {
+public class MemberListController {
     
     @Autowired
     MemberDao memberDao;
     
-    @Override
-    public String service(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @RequestMapping
+    public String list(HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<Member> list = memberDao.selectList();
 
         request.setAttribute("list", list);

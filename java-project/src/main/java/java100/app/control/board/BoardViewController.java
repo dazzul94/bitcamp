@@ -6,18 +6,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java100.app.control.PageController;
+import java100.app.annotation.RequestMapping;
 import java100.app.dao.BoardDao;
 import java100.app.domain.Board;
 
 @Component("/board/view")
-public class BoardViewController implements PageController {
+public class BoardViewController {
 
     @Autowired
     BoardDao boardDao;
 
-    @Override
-    public String service(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @RequestMapping
+    public String view(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         int no = Integer.parseInt(request.getParameter("no"));
         Board board = boardDao.selectOne(no);

@@ -6,16 +6,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java100.app.control.PageController;
+import java100.app.annotation.RequestMapping;
 import java100.app.dao.RoomDao;
 
 @Component("/room/delete")
-public class RoomDeleteController implements PageController {
+public class RoomDeleteController {
     @Autowired
     RoomDao roomDao;
 
-    @Override
-    public String service(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @RequestMapping
+    public String delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         int no = Integer.parseInt(request.getParameter("no"));
         roomDao.delete(no);

@@ -6,17 +6,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java100.app.control.PageController;
+import java100.app.annotation.RequestMapping;
 import java100.app.dao.MemberDao;
 
 @Component("/member/delete")
-public class MemberDeleteController implements PageController {
+public class MemberDeleteController {
     
     @Autowired
     MemberDao memberDao;
 
-    @Override
-    public String service(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @RequestMapping
+    public String delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         int no = Integer.parseInt(request.getParameter("no"));
         memberDao.delete(no);
