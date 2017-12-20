@@ -107,10 +107,12 @@ public class DispatcherServlet extends HttpServlet {
             return null;
         }
     }
+    
     private String getPropertyName(Method method) {
         String name = method.getName().replace("set", "");
         return String.format("%c%s", Character.toLowerCase(name.charAt(0)), name.substring(1));
     }
+    
     private Object toParamTypeValue(Parameter param, String value) {
 
         Class<?> type = param.getType();
