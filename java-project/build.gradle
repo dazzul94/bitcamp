@@ -1,24 +1,23 @@
 apply plugin: 'java'
-apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
-
+apply plugin: 'war'
 
 eclipse {
-  jdt { 
-  //gradle에게 jdk 1.9가 아닌 9으로 이름 바꾸게 함
+  jdt {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
     javaRuntimeName = "JavaSE-1.8"
 
-  /* file {
+    /*
+    file {
       whenMerged { jdt
       }
 
-    //.settings/org.eclipse.jdt.core.prefs 파일에 들어갈 값 설정
+      // .settings/org.eclipse.jdt.core.prefs 파일에 들어갈 값 설정
       withProperties { properties ->
-      properties["org.eclipse.jdt.core.compiler.codegen.targetPlatform"] = "9"
-      properties["org.eclipse.jdt.core.compiler.source"] = "9"
-      properties["org.eclipse.jdt.core.compiler.compliance"] = "9"
+        properties["org.eclipse.jdt.core.compiler.codegen.targetPlatform"] = "9"
+        properties["org.eclipse.jdt.core.compiler.source"] = "9"
+        properties["org.eclipse.jdt.core.compiler.compliance"] = "9"
       }
     }
     */
@@ -26,36 +25,42 @@ eclipse {
 }
 
 compileJava {
-    // 소스 파일이 UTF-8 규칙에 따라 저장되었음을 컴파일러에게 알린다.
-    options.encoding = 'UTF-8'
+    options.encoding = 'UTF-8'   
 }
-
 javadoc {
     options.encoding = "UTF-8"
 }
-
 repositories {
     jcenter()
 }
-
 dependencies {
-// https://mvnrepository.com/artifact/javax.servlet/jstl
-compile group: 'javax.servlet', name: 'jstl', version: '1.2'
-	//JAVE EE 의 Servlet 기술을 지원하는 라이브러리
-	providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
-
-	//Spring Ioc 라이브러리
-    compile 'org.springframework:spring-context:5.0.2.RELEASE'
-    
-    //Reflection API
-    compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
-
-    //MySQL DBMS의 JDBC Driver
+    // MySQL DBMS의 JDBC Driver
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.44'
+    
+    // Reflection 작업을 도와주는 라이브러리
+    compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
+ 
+    // Spring IoC 컨테이너 라이브러리
+    compile 'org.springframework:spring-context:5.0.2.RELEASE'
+ 
+    // JavaEE의 Servlet 기술을 지원하는 라이브러리
+    // "provided" 선언된 라이브러리는 컴파일할 때 사용하고 배포할 때는 제외한다.
+    // 왜? 
+    // 프로그램을 배포하는 서블릿 컨테이너에 
+    // 이 라이브러리 파일이 내장되어 있기 때문에 또 배포할 필요가 없다.
+    providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+    
+    // JTSL 태그 라이브러리
+    compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+    
     compile 'com.google.guava:guava:22.0'
-
     testCompile 'junit:junit:4.12'
 }
+
+
+
+
+
 
 
 
