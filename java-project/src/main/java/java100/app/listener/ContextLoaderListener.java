@@ -6,12 +6,14 @@ import javax.servlet.ServletContextListener;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java100.app.annotation.RequestMappingHandlerMapping;
 import java100.app.util.DataSource;
 
 //@WebListener
 public class ContextLoaderListener implements ServletContextListener {
 
     public static AnnotationConfigApplicationContext iocContainer;
+    public static RequestMappingHandlerMapping handlerMapping; //DispatcherServlet이 찾을수있게
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -22,6 +24,9 @@ public class ContextLoaderListener implements ServletContextListener {
         try {
             Class<?> configClass = Class.forName(configClassname);
             iocContainer = new AnnotationConfigApplicationContext(configClass);
+            
+            handlerMapping = new RequestMappingHandlerMapping(iocContainer);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

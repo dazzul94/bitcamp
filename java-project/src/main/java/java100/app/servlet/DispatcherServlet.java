@@ -1,7 +1,6 @@
 package java100.app.servlet;
 
 import static org.reflections.ReflectionUtils.getMethods;
-import static org.reflections.ReflectionUtils.withAnnotation;
 import static org.reflections.ReflectionUtils.withParametersCount;
 import static org.reflections.ReflectionUtils.withPrefix;
 
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java100.app.annotation.RequestMapping;
+import java100.app.annotation.RequestMappingHandlerMapping.RequestHandler;
 import java100.app.annotation.RequestParam;
 import java100.app.listener.ContextLoaderListener;
 
@@ -28,25 +27,18 @@ public class DispatcherServlet extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String pageControllerPath = request.getServletPath().replace(".do", "");
+        String servletPath = request.getServletPath().replace(".do", "");
 
-        Object pageController = ContextLoaderListener.iocContainer.getBean(pageControllerPath);
+        RequestHandler requestHandler = ContextLoaderListener.handlerMapping.getRequestHandler(servletPath);
 
-        if (pageController == null) {
-            throw new ServletException("페이지 컨트롤러를 찾을 수 없습니다");
+        if (requestHandler == null) {
+            throw new ServletException("요청 핸들러를 찾을 수 없습니다"); // 메서드!
         }
-        @SuppressWarnings("unchecked")
-        Set<Method> methods = getMethods(pageController.getClass(), withAnnotation(RequestMapping.class));
 
-        if (methods.size() == 0) {
-            throw new ServletException("페이지 컨트롤러의 요청 핸들러를 찾을 수 없습니다"); // 메서드!
-        }
-        Method requestHandler = (Method) methods.toArray()[0];
-
-        Object[] paramValues = getParamValuesFor(requestHandler, request, response);
+        Object[] paramValues = getParamValuesFor(requestHandler.method, request, response);
 
         try {
-            String viewName = (String) requestHandler.invoke(pageController, paramValues); // 파라미터를 배열로 넘겨도된다
+            String viewName = (String) requestHandler.method.invoke(requestHandler.instance, paramValues); // 파라미터를 배열로 넘겨도된다
 
             if (viewName.startsWith("redirect")) {
                 response.sendRedirect(viewName.substring(9));
