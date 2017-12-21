@@ -7,16 +7,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java100.app.annotation.RequestMapping;
-import java100.app.annotation.RequestParam;
 import java100.app.dao.ScoreDao;
 import java100.app.domain.Score;
-import java100.app.listener.ContextLoaderListener;
 
 @Controller
 public class ScoreController {
 
+    public ScoreController() {
+        System.out.println("ScoreController 생성되었음!");
+    }
+    
     @Autowired
     ScoreDao scoreDao;
 
@@ -41,8 +44,6 @@ public class ScoreController {
     public String delete(
             @RequestParam("no") int no,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        ScoreDao scoreDao = ContextLoaderListener.iocContainer.getBean(ScoreDao.class);
 
         scoreDao.delete(no);
 

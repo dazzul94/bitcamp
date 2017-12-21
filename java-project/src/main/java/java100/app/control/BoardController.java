@@ -9,12 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java100.app.annotation.RequestMapping;
-import java100.app.annotation.RequestParam;
 import java100.app.dao.BoardDao;
 import java100.app.domain.Board;
-import java100.app.listener.ContextLoaderListener;
 
 @Controller
 public class BoardController {
@@ -26,7 +25,6 @@ public class BoardController {
     public String list(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        BoardDao boardDao = ContextLoaderListener.iocContainer.getBean(BoardDao.class);
         List<Board> list = boardDao.selectList();
 
         request.setAttribute("list", list);
