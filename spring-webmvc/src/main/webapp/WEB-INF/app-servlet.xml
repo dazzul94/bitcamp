@@ -11,4 +11,14 @@
 
     <context:component-scan base-package="java100.app.web.v02"/> 
     <!-- 이 폴더에서 콤포넌트를 찾는다 -->
+    
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="webBindingInitializer">
+            <bean class="java100.app.web.v02.Test12WebBindingInitializer"/>
+        </property>
+    </bean>
+    
+    <bean id="multipartResolver" 
+    class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></bean>
+
 </beans>

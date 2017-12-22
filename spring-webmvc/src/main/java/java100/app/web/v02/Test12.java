@@ -25,4 +25,13 @@ public class Test12 {
         System.out.println("-----------------------------------------------");
         return "/hello.jsp";
     }
+   /*
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        System.out.println("initBinder()");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+    }
+    */
 }
