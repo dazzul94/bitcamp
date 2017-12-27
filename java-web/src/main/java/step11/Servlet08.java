@@ -1,0 +1,32 @@
+package step11;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URLDecoder;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@SuppressWarnings("serial")
+@WebServlet("/step11/Servlet08")
+public class Servlet08 extends HttpServlet {
+    @Override
+    public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        Cookie[] cookies = req.getCookies();
+
+        res.setContentType("text/plain;charset=UTF-8");
+        PrintWriter out = res.getWriter();
+        out.println("보미언니를 보냈음!");
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                out.printf("%s = %s\n", cookie.getName(), URLDecoder.decode(cookie.getValue(), "UTF-8"));
+            }
+        }
+    }
+
+}
