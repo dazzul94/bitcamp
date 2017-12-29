@@ -3,11 +3,12 @@ package java100.app.domain;
 import java.sql.Date;
 
 public class Member {
+    
     protected int no;
     protected String name;
     protected String email;
     protected String password;
-    protected Date createDate;
+    protected Date createdDate;
     
     public Member() {}
     
@@ -16,37 +17,11 @@ public class Member {
         this.name = name;
         this.email = email;
     }
-    public Member(int no, String name, String email, Date createDate) {
-        this.no = no;
-        this.name = name;
-        this.email = email;
-        this.createDate = createDate;
-    }
-    public Member(int no, String name, String email, String password) {
-        this.no = no;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
-
-    public Member(String name, String email, String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
 
     @Override
     public String toString() {
-        return "Member [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password + ", regdt="
-                + createDate + "]";
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+        return "Member [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password + ", createdDate="
+                + createdDate + "]";
     }
 
     public int getNo() {
@@ -55,6 +30,14 @@ public class Member {
 
     public void setNo(int no) {
         this.no = no;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public String getName() {
