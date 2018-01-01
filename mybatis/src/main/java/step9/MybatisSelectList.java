@@ -1,20 +1,29 @@
 package step9;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
 public class MybatisSelectList {
     public static void main(String[] args) throws Exception {
-        BoardDao boardDao = new BoardDao();
-        boardDao.setSqlSessionFactory(SqlSessionFactoryBean.getObject());
+        InputStream inputStream = 
+                Resources.getResourceAsStream("step8/mybatis-config.xml");
+        SqlSessionFactory sqlSessionFactory =
+          new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
         
         // 정렬 정보를 맵 객체에 담아 selectList()에 넘긴다.
         Map<String,Object> data = new HashMap<>();
         
         // order by를 위한 값
-        data.put("orderColumn", "regdt");
+        data.put("orderColumn", "title");
         data.put("align", "asc");
         
         // where 절을 위한 값
@@ -23,9 +32,10 @@ public class MybatisSelectList {
         words.add("1");
         words.add("5");
         
-//        data.put("words", words);
+        data.put("words", words);
         
-        List<Board> records = boardDao.findAll(data);
+        List<Board> records = sqlSession.selectList(
+                "JdbcTestMapper.findAll", data);
         
         for (Board board : records) {
             System.out.printf("%d,%s,%s,%s\n", 
@@ -34,5 +44,7 @@ public class MybatisSelectList {
                     board.getCreatedDate(),
                     board.getViewCount());
         }
+        
+        sqlSession.close();
     }
 }

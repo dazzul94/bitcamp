@@ -4,7 +4,7 @@
 //      SQL문을 실행시키면 된다.
 //    - mybatis 매뉴얼에서 해당 코드를 가져온다.
 //
-package step2;
+package step3;
 
 import java.io.InputStream;
 

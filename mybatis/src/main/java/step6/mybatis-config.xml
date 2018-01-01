@@ -4,11 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
   <properties resource="step6/jdbc.properties"/>
-  
+
+  <!-- 클래스의 FQName(Fully-Qualified Name; 패키지명 + 클래스명)에 대해
+       별명을 부여하여 SQL Mapper 파일에서 사용.  -->
   <typeAliases>
     <typeAlias type="step6.Board" alias="board"/>
   </typeAliases>
-  
+
   <environments default="development">
     <environment id="development">
       <transactionManager type="JDBC"/>
@@ -20,7 +22,16 @@
       </dataSource>
     </environment>
   </environments>
+  
   <mappers>
     <mapper resource="step6/JdbcTestMapper.xml"/>
   </mappers>
+  
 </configuration>
+
+
+
+
+
+
+

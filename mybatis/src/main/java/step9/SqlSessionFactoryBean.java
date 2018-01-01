@@ -16,11 +16,3 @@ public class SqlSessionFactoryBean {
         return new SqlSessionFactoryBuilder().build(inputStream);
     }
 }
-
-
-
-
-
-
-
-

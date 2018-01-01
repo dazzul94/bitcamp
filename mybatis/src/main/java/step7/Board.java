@@ -39,4 +39,6 @@ public class Board {
     public void setViewCount(int viewCount) {
         this.viewCount = viewCount;
     }
+    
+    
 }

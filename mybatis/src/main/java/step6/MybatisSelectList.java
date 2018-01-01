@@ -10,13 +10,21 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class MybatisSelectList {
     public static void main(String[] args) throws Exception {
-        InputStream inputStream = Resources.getResourceAsStream("step6/mybatis-config.xml");
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        
+        InputStream inputStream = 
+                Resources.getResourceAsStream("step6/mybatis-config.xml");
+        SqlSessionFactory sqlSessionFactory =
+          new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession sqlSession = sqlSessionFactory.openSession();
+        
+        // selectList()가 리턴하는 List에는 Board 객체가 들어 있다.
         List<Board> records = sqlSession.selectList("JdbcTestMapper.findAll");
-        for (Board board : records) { //record는 Map객체이다
-            System.out.printf("%d, %s, %s, %s\n", board.getNo(), board.getTitle(), board.getCreatedDate(), board.getViewCount());
+        
+        for (Board board : records) {
+            System.out.printf("%d,%s,%s,%s\n", 
+                    board.getNo(),
+                    board.getTitle(),
+                    board.getCreatedDate(),
+                    board.getViewCount());
         }
         
         sqlSession.close();

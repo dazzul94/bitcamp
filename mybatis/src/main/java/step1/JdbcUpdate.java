@@ -1,4 +1,4 @@
-// DBMS 서버에게 SQL문을 보내기 - select
+// DBMS 서버에게 SQL문을 보내기 - update
 // => 데이터 입출력 테스트를 위한 테이블 생성하라!
 //    bitcamp-docs/jdbcexam.sql 을 실행하라!
 // 
@@ -6,10 +6,9 @@ package step1;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class JsbcSelect {
+public class JdbcUpdate {
 
     public static void main(String[] args) throws Exception {
         
@@ -22,20 +21,12 @@ public class JsbcSelect {
         
         Statement stmt = con.createStatement();
         
-        ResultSet rs = stmt.executeQuery(
-            "select * from jdbc_test");
+        // Statement 객체의 메서드를 통해 SQL문을 서버에 보낸다.
+        stmt.executeUpdate(
+            "update jdbc_test set title='xxx', conts='xxxx' where no=28");
         
-        while (rs.next()) {
-            System.out.printf("%d, %s, %s, %s, %d\n",
-                rs.getInt("no"), // 레코드에서 값을 꺼낼 때 컬럼 이름을 지정한다.
-                rs.getString(2), // select할 때 지정한 컬럼 번호를 사용할 수 있다.
-                rs.getString("conts"), // 그러나 가능한 컬럼명을 사용하라!
-                rs.getDate("regdt")/*.toString()*/,
-                rs.getInt("vwcnt")
-                );
-        }
+        System.out.println("변경 완료!");
         
-        rs.close();
         stmt.close();
         con.close();
     }

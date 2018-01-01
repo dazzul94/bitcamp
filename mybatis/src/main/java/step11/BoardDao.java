@@ -7,22 +7,26 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 @Component
 public class BoardDao {
+    
     @Autowired
     SqlSessionFactory sqlSessionFactory;
-
-    public List<Board> findAll(Map<String, Object> data) {
+    
+    public List<Board> findAll(Map<String,Object> data) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-            return sqlSession.selectList("JdbcTestMapper.findAll", data);
-        }
+            return sqlSession.selectList(
+                    "JdbcTestMapper.findAll", data);
+        }    
     }
-
+    
     public Board findByNo(int no) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             return sqlSession.selectOne("JdbcTestMapper.findByNo", no);
-        }
+        }    
     }
+    
     public int insert(Board board) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             int count = sqlSession.insert("JdbcTestMapper.insert", board);
@@ -30,6 +34,7 @@ public class BoardDao {
             return count;
         }
     }
+    
     public int update(Board board) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             int count = sqlSession.update("JdbcTestMapper.update", board);
@@ -37,6 +42,7 @@ public class BoardDao {
             return count;
         }
     }
+    
     public int delete(int no) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             int count = sqlSession.delete("JdbcTestMapper.delete", no);
@@ -44,4 +50,13 @@ public class BoardDao {
             return count;
         }
     }
+    
 }
+
+
+
+
+
+
+
+

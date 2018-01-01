@@ -23,7 +23,7 @@ public class JdbcDelete {
         
         // Statement 객체의 메서드를 통해 SQL문을 서버에 보낸다.
         stmt.executeUpdate(
-            "delete from jdbc_test where no=1");
+            "delete from jdbc_test where no=28");
         
         System.out.println("삭제 완료!");
         

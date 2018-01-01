@@ -9,7 +9,8 @@ import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 // 역할?
 // => SqlSessionFactory 객체를 만들어주는 공장 역할을 한다.
-public class SqlSessionFactoryBean extends AbstractFactoryBean<SqlSessionFactory> {
+public class SqlSessionFactoryBean 
+        extends AbstractFactoryBean<SqlSessionFactory> {
     
     String configLocation;
     
@@ -24,7 +25,16 @@ public class SqlSessionFactoryBean extends AbstractFactoryBean<SqlSessionFactory
 
     @Override
     protected SqlSessionFactory createInstance() throws Exception {
-        InputStream inputStream = Resources.getResourceAsStream(this.configLocation);
+        InputStream inputStream = 
+                Resources.getResourceAsStream(this.configLocation);
         return new SqlSessionFactoryBuilder().build(inputStream);
     }
 }
+
+
+
+
+
+
+
+

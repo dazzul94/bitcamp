@@ -1,4 +1,4 @@
-/* bitcamp-java-basic/bitcamp.java100.ch17 예제에서 사용할 테이블 생성 */
+/* 예제에서 사용할 테이블 생성 */
 create table jdbc_test (
     no int not null,
     title varchar(200) not null,

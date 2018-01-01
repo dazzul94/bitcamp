@@ -5,8 +5,6 @@
 <configuration>
   <properties resource="step10/jdbc.properties"/>
 
-  <!-- 클래스의 FQName(Fully-Qualified Name; 패키지명 + 클래스명)에 대해
-       별명을 부여하여 SQL Mapper 파일에서 사용.  -->
   <typeAliases>
     <typeAlias type="step10.Board" alias="board"/>
   </typeAliases>

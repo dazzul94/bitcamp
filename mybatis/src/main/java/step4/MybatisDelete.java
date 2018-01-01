@@ -9,15 +9,20 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class MybatisDelete {
     public static void main(String[] args) throws Exception {
-        InputStream inputStream = Resources.getResourceAsStream("step4/mybatis-config.xml");
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        
+        InputStream inputStream = 
+                Resources.getResourceAsStream("step4/mybatis-config.xml");
+        SqlSessionFactory sqlSessionFactory =
+          new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        int count = sqlSession.delete("JdbcTestMapper.delete", 33);
-        System.out.printf("%d개를 지웠습니당", count);
+        // delete(SQL문을 찾을 때 이름, 데이터가 저장된 객체)
+        // => 원시 타입의 값을 넘기면 auto-boxing 된다.
+        int count = sqlSession.delete("JdbcTestMapper.delete", 30);
         
         sqlSession.commit();
+        
+        System.out.printf("%d 개가 삭제되었습니다.", count);
+        
         sqlSession.close();
     }
 }
