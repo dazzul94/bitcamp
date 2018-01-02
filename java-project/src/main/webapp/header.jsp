@@ -4,8 +4,8 @@
     trimDirectiveWhitespaces="true"%>
 <header>
 <nav class='navbar navbar-expand-lg navbar-light bg-light'>
-<a class='navbar-brand' href='../index.html'>
-  <img src='../images/bootstrap-solid.svg' width='30' height='30' class='d-inline-block align-top' alt=''>
+<a class='navbar-brand' href='../../index.html'>
+  <img src='../../images/B.png' width='30' height='30' class='d-inline-block align-top' alt=''>
   비트캠프
 </a>
 <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation'>
@@ -14,16 +14,16 @@
 <div class='collapse navbar-collapse' id='navbarNav'>
 <ul class='navbar-nav'>
   <li class='nav-item'>
-    <a class='nav-link' href='../score/list.do'>성적</a>
+    <a class='nav-link' href='../score/list'>성적</a>
   </li>
   <li class='nav-item'>
-    <a class='nav-link' href='../member/list.do'>회원</a>
+    <a class='nav-link' href='../member/list'>회원</a>
   </li>
   <li class='nav-item'>
-    <a class='nav-link' href='../board/list.do'>게시판</a>
+    <a class='nav-link' href='../board/list'>게시판</a>
   </li>
   <li class='nav-item'>
-    <a class='nav-link' href='../room/list.do'>강의실</a>
+    <a class='nav-link' href='../room/list'>강의실</a>
   </li>
 </ul>
 </div>
