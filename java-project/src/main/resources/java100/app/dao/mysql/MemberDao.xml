@@ -56,6 +56,11 @@
 	<select id="findByNo" resultMap="memberMap" parameterType="int">
         select no,name,email,regdt from ex_memb where no=#{no}
 	</select> 
+	
+	<select id="findByEmailAndPassword" resultMap="memberMap" parameterType="map">
+	   select no,name,email,regdt from ex_memb 
+	   where email=#{email} and pwd=password(#{password}) 
+	</select>
 </mapper>  
 
 

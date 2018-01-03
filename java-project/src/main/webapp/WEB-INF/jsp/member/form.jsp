@@ -5,16 +5,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>성적관리</title>
+<title>회원관리</title>
 <link rel='stylesheet' href='../../node_modules/bootstrap/dist/css/bootstrap.min.css'>
 <link rel='stylesheet' href='../../css/common.css'>
 </head>
 <body>
 <div class='container'>
 
-<jsp:include page="/header.jsp"/>
+<jsp:include page="../header.jsp"/>
 
-<h1>성적 상세 정보</h1>
+<h1>회원 등록 결과</h1>
 <form action="add" method='post'>
 <div class='form-group row'>
 <label for='name' class='col-sm-2 col-form-label'>이름</label>
@@ -23,35 +23,29 @@
 </div>
 </div>
 <div class='form-group row'>
-<label for='kor' class='col-sm-2 col-form-label'>국어</label>
+<label for='email' class='col-sm-2 col-form-label'>이메일</label>
 <div class='col-sm-10'>
-<input class='form-control' id='kor' type='number' name='kor'>
+<input class='form-control' id='email' type='email' name='email'>
 </div>
 </div>
 <div class='form-group row'>
-<label for='eng' class='col-sm-2 col-form-label'>영어</label>
+<label for='password' class='col-sm-2 col-form-label'>암호</label>
 <div class='col-sm-10'>
-<input class='form-control' id='eng' type='number' name='eng'>
-</div>
-</div>
-<div class='form-group row'>
-<label for='math' class='col-sm-2 col-form-label'>수학</label>
-<div class='col-sm-10'>
-<input class='form-control' id='math' type='number' name='math'>
+<input class='form-control' id='password' type='password' name='password'>
 </div>
 </div>
 <div class='form-group row'>
 <div class='col-sm-10'>
-<button class='btn btn-primary btn-sm'>추가</button>
+<button class='btn btn-primary btn-sm'>등록</button>
 </div>
 </div>
 </form>
 
-<jsp:include page="/footer.jsp"/>
+<jsp:include page="../footer.jsp"/>
 
 </div>
 
-<%@ include file="../jslib.txt"%>
+<jsp:include page="../jslib.jsp"/>
 
 </body>
 </html>

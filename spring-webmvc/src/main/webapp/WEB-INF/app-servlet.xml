@@ -11,7 +11,7 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<context:component-scan base-package="java100.app.web.v03" />
+	<context:component-scan base-package="java100.app.web.v04" />
 
 
 	<bean
@@ -40,6 +40,14 @@
 		<property name="prefix" value="/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+    <mvc:interceptors>
+        <bean class="java100.app.web.v04.Interceptor01"/>
+    <mvc:interceptor>
+        <mvc:mapping path="/v04/controller02/*"/>
+        <mvc:exclude-mapping path="/v04/controller02/m1"/>
+        <bean class="java100.app.web.v04.Interceptor02"/>
+    </mvc:interceptor>
+    </mvc:interceptors>
 </beans>
 
 

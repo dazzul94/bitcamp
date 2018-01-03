@@ -13,7 +13,7 @@
 <body>
 <div class='container'>
 
-<jsp:include page="/header.jsp"/>
+<jsp:include page="../header.jsp"/>
 
 <h1>게시물 상세정보</h1>
 
@@ -66,11 +66,11 @@
         <p>'${param.no}'번 게시물이 없습니다.</p>
 </c:if>
 
-<jsp:include page="/footer.jsp"/>
+<jsp:include page="../footer.jsp"/>
 
 </div>
 
-<%@ include file="../jslib.txt"%>
+<jsp:include page="../jslib.jsp"/>
 
 </body>
 </html>

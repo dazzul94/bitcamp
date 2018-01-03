@@ -5,33 +5,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>회원관리</title>
+<title>게시판</title>
 <link rel='stylesheet' href='../../node_modules/bootstrap/dist/css/bootstrap.min.css'>
 <link rel='stylesheet' href='../../css/common.css'>
 </head>
 <body>
 <div class='container'>
 
-<jsp:include page="/header.jsp"/>
+<jsp:include page="../header.jsp"/>
 
-<h1>회원 등록 결과</h1>
+<h1>새 게시물</h1>
 <form action="add" method='post'>
 <div class='form-group row'>
-<label for='name' class='col-sm-2 col-form-label'>이름</label>
+<label for='title' class='col-sm-2 col-form-label'>제목</label>
 <div class='col-sm-10'>
-<input class='form-control' id='name' type='text' name='name'>
+<input class='form-control' id='title' type='text' name='title'>
 </div>
 </div>
 <div class='form-group row'>
-<label for='email' class='col-sm-2 col-form-label'>이메일</label>
+<label for='content' class='col-sm-2 col-form-label'>내용</label>
 <div class='col-sm-10'>
-<input class='form-control' id='email' type='email' name='email'>
-</div>
-</div>
-<div class='form-group row'>
-<label for='password' class='col-sm-2 col-form-label'>암호</label>
-<div class='col-sm-10'>
-<input class='form-control' id='password' type='password' name='password'>
+<textarea class='form-control' id='content' name='content'></textarea>
 </div>
 </div>
 <div class='form-group row'>
@@ -41,11 +35,11 @@
 </div>
 </form>
 
-<jsp:include page="/footer.jsp"/>
+<jsp:include page="../footer.jsp"/>
 
 </div>
 
-<%@ include file="../jslib.txt"%>
+<jsp:include page="../jslib.jsp"/>
 
 </body>
 </html>

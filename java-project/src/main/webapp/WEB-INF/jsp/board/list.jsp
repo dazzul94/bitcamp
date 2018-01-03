@@ -1,4 +1,4 @@
-<%@page import="java100.app.domain.Room"%>
+<%@page import="java100.app.domain.Board"%>
 <%@ page language="java" 
     contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
@@ -7,45 +7,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>강의실관리</title>
+<title>게시판</title>
 <link rel='stylesheet' href='../../node_modules/bootstrap/dist/css/bootstrap.min.css'>
 <link rel='stylesheet' href='../../css/common.css'>
 </head>
 <body>
 <div class='container'>
 
-<jsp:include page="/header.jsp"/>
+<jsp:include page="../header.jsp"/>
 
-<h1>강의실 목록</h1>
+<h1>게시물 목록</h1>
 
 <p><a href='form' class='btn btn-primary btn-sm'>추가</a></p>
 
 <table class='table table-hover'>
 <thead>
 <tr>
-<th>번호</th><th>지역</th><th>강의실명</th><th>수용인원</th><th>삭제</th>
+<th>번호</th><th>제목</th><th>등록일</th><th>조회수</th>
 </tr>
 </thead>
 <tbody>
 
-<c:forEach items="${list}" var="room">
+<c:forEach items="${list}" var="board">
         <tr>
-        <td>${room.no}</td>
-        <td>${room.location}</td>
-        <td>${room.name}</td>
-        <td>${room.capacity}</td>
-        <td><a href='delete?no=${room.no}' class='btn btn-danger btn-sm'>삭제</a></td>
+        <td>${board.no}</td>
+        <td><a href='${board.no}'>${board.title}</a></td>
+        <td>${board.regDate}</td>
+        <td>${board.viewCount}</td>
         </tr>
 </c:forEach>
 
 </tbody>
 </table>
 
-<jsp:include page="/footer.jsp"/>
+<jsp:include page="../footer.jsp"/>
 
 </div>
 
-<%@ include file="../jslib.txt"%>
+<jsp:include page="../jslib.jsp"/>
 
 </body>
 </html>
+    
