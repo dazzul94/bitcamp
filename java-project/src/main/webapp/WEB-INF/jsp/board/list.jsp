@@ -3,7 +3,8 @@
     contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     trimDirectiveWhitespaces="true"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,18 +19,12 @@
 
 <h1>게시물 목록</h1>
 
-<div class="toolbar">
-<form action="list" method="get" class="searchbox" style="float:right;">
-<input type="text" name="nm">
-<button class="btn btn-dark btn-sm" >검색</button>
-</form>
-<a href='form' class='btn btn-primary btn-sm'>추가</a>
-</div>
+<jsp:include page="../listToolbar.jsp"/>
 
 <table class='table table-hover'>
 <thead>
 <tr>
-<th>번호</th><th>제목</th><th>등록일</th><th>조회수</th>
+<th>번호</th><th>제목</th><th>등록일</th><th>조회수</th><th>작성자</th>
 </tr>
 </thead>
 <tbody>
@@ -37,9 +32,11 @@
 <c:forEach items="${list}" var="board">
         <tr>
         <td>${board.no}</td>
-        <td><a href='${board.no}'>${board.title}</a></td>
+        <td><a href='${board.no}'>${fn:substring(board.title, 0, 20)}
+        ${(fn:length(board.title) > 20) ? '...' : ''}</a></td>
         <td>${board.regDate}</td>
         <td>${board.viewCount}</td>
+        <td>${board.writer.name}</td>
         </tr>
 </c:forEach>
 
@@ -47,6 +44,7 @@
 </table>
 
 <jsp:include page="../paging.jsp"/>
+
 <jsp:include page="../footer.jsp"/>
 
 </div>

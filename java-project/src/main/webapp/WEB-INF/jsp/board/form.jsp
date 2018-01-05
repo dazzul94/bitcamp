@@ -28,6 +28,38 @@
 <textarea class='form-control' id='content' name='content'></textarea>
 </div>
 </div>
+
+
+<div class='form-group row'>
+<div class='col-sm-2 col-form-label'></div>
+<div class='col-sm-10'>
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" id="file" name="files">
+        <label class="custom-file-label" for="file">첨부파일을 선택하세요.</label>
+    </div>
+</div>
+</div>
+
+<div class='form-group row'>
+<div class='col-sm-2 col-form-label'></div>
+<div class='col-sm-10'>
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" id="file" name="files">
+        <label class="custom-file-label" for="file">첨부파일을 선택하세요.</label>
+    </div>
+</div>
+</div>
+
+<div class='form-group row'>
+<div class='col-sm-2 col-form-label'></div>
+<div class='col-sm-10'>
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" id="file" name="files">
+        <label class="custom-file-label" for="file">첨부파일을 선택하세요.</label>
+    </div>
+</div>
+</div>
+
 <div class='form-group row'>
 <div class='col-sm-10'>
 <button class='btn btn-primary btn-sm'>등록</button>

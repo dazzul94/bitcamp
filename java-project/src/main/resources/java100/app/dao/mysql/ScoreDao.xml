@@ -3,6 +3,8 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!-- DAO 객체를 자동으로 생성하려면,
+     namespace의 값이 인터페이스 이름과 같아야 한다. -->
 <mapper namespace="java100.app.dao.ScoreDao">
 
     <sql id="select1">
@@ -17,12 +19,12 @@
         <include refid="select1"/>
         from ex_score
 
-        <if test="names != null">
-            <where>
-                <foreach collection="names" item="name">
-                    or name like '${name}%'
-                </foreach>
-            </where>
+        <if test="words != null">
+	        <where>
+	            <foreach collection="words" item="word">
+	                or name like '${word}%'
+	            </foreach>
+	        </where>
         </if>
         
         <!-- 정렬 조건에 따라 SQL문을 변경한다.-->
@@ -42,6 +44,7 @@
             </otherwise>
         </choose>
         
+        <!-- 페이지징 처리 -->
         limit #{startIndex}, #{size}
     </select>
     
@@ -76,7 +79,6 @@
         delete from ex_score
         where no=#{value}
     </delete>
-    
     
 </mapper>  
 

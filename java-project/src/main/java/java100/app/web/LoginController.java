@@ -1,7 +1,5 @@
 package java100.app.web;
 
-import java.util.HashMap;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,8 +20,7 @@ import java100.app.service.MemberService;
 @SessionAttributes("loginUser")
 public class LoginController {
     
-    @Autowired
-    MemberService memberService;
+    @Autowired MemberService memberService;
     
     @RequestMapping(value="login", method=RequestMethod.GET)
     public String form(Model model) {
@@ -38,11 +35,8 @@ public class LoginController {
             String saveEmail,
             HttpServletResponse response,
             Model model) {
-        HashMap<String,Object> params = new HashMap<>();
-        params.put("email", email);
-        params.put("password", password);
         
-        Member member = memberService.findByEmailAndPassword(params);
+        Member member = memberService.get(email, password);
         
         if (saveEmail != null) {
             Cookie cookie = new Cookie("email", email);

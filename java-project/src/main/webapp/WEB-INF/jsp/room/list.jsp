@@ -18,13 +18,7 @@
 
 <h1>강의실 목록</h1>
 
-<div class="toolbar">
-<form action="list" method="get" class="searchbox" style="float:right;">
-<input type="text" name="nm">
-<button class="btn btn-dark btn-sm" >검색</button>
-</form>
-<a href='form' class='btn btn-primary btn-sm'>추가</a>
-</div>
+<jsp:include page="../listToolbar.jsp"/>
 
 <table class='table table-hover'>
 <thead>
@@ -48,6 +42,7 @@
 </table>
 
 <jsp:include page="../paging.jsp"/>
+
 <jsp:include page="../footer.jsp"/>
 
 </div>

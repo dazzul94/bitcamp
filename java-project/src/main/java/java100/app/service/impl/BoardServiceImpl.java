@@ -14,50 +14,46 @@ import java100.app.service.BoardService;
 @Service
 public class BoardServiceImpl implements BoardService {
 
-    @Autowired
-    BoardDao boardDao;
+    @Autowired BoardDao boardDao;
     
     @Override
     public List<Board> list(int pageNo, int pageSize, Map<String, Object> options) {
-        HashMap<String, Object> params = new HashMap<>();
+        
+        HashMap<String,Object> params = new HashMap<>();
         params.put("startIndex", (pageNo - 1) * pageSize);
         params.put("size", pageSize);
-
+        
         if (options != null) {
             params.putAll(options);
         }
+        
         return boardDao.findAll(params);
-
     }
 
     @Override
     public Board get(int no) {
+        boardDao.updateViewCount(no);
         return boardDao.findByNo(no);
     }
-
-    @Override
-    public int add(Board board) {
-        return boardDao.insert(board);
-    }
-
-    @Override
-    public int update(Board board) {
-        return boardDao.update(board);
-    }
-
-    @Override
-    public int delete(int no) {
-        return boardDao.delete(no);
-    }
-
+    
     @Override
     public int getTotalCount() {
         return boardDao.countAll();
     }
 
     @Override
-    public int updateViewCount(int no) {
-        return boardDao.updateViewCount(no);
+    public int add(Board score) {
+        return boardDao.insert(score);
+    }
+
+    @Override
+    public int update(Board score) {
+        return boardDao.update(score);
+    }
+
+    @Override
+    public int delete(int no) {
+        return boardDao.delete(no);
     }
 
 }
