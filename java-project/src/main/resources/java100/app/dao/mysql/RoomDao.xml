@@ -37,7 +37,12 @@
 				no asc
 			</otherwise>
 		</choose>
+		 limit #{startIndex}, #{size}
 	</select>
+	
+	<select id="countAll" resultType="int">
+        select count(*) from ex_room
+    </select>
 
 	<insert id="insert" parameterType="room">
 		insert into ex_room(loc,name,capacity) values(#{location},#{name},#{capacity})

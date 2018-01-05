@@ -38,7 +38,12 @@
 				no asc
 			</otherwise>
 		</choose>
+		limit #{startIndex}, #{size}
 	</select>
+	
+	<select id="countAll" resultType="int">
+        select count(*) from ex_memb
+    </select>
 
 	<insert id="insert" parameterType="member">
 		insert into ex_memb(name,email,pwd,regdt)

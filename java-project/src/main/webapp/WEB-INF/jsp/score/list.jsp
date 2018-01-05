@@ -3,6 +3,7 @@
     pageEncoding="UTF-8"
     trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,11 +19,11 @@
 <h1>성적 목록</h1>
 
 <div class="toolbar">
-<a href='form' class='btn btn-primary btn-sm'>추가</a>
-<form action="list" method="get" class="searchbox">
+<form action="list" method="get" class="searchbox" style="float:right;">
 <input type="text" name="nm">
-<button>검색</button>
+<button class="btn btn-dark btn-sm" >검색</button>
 </form>
+<a href='form' class='btn btn-primary btn-sm'>추가</a>
 </div>
 
 <table class='table table-hover'>
@@ -38,13 +39,14 @@
         <td>${score.no}</td>
         <td><a href='${score.no}'>${score.name}</a></td>
         <td>${score.sum}</td>
-        <td>${score.aver}</td>
+        <td><fmt:formatNumber value="${score.aver}" pattern=".0"/></td> 
     </tr>
 </c:forEach>
 
 </tbody>
 </table>
 
+<jsp:include page="../paging.jsp"/>
 <jsp:include page="../footer.jsp"/>
 
 </div>
