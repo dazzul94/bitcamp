@@ -12,14 +12,6 @@ public class Board {
     protected Member writer;
     protected List<UploadFile> files;
     
-    public Member getWriter() {
-        return writer;
-    }
-
-    public void setWriter(Member writer) {
-        this.writer = writer;
-    }
-
     public int getNo() {
         return no;
     }
@@ -58,6 +50,14 @@ public class Board {
 
     public void setViewCount(int viewCount) {
         this.viewCount = viewCount;
+    }
+
+    public Member getWriter() {
+        return writer;
+    }
+
+    public void setWriter(Member writer) {
+        this.writer = writer;
     }
 
     public List<UploadFile> getFiles() {

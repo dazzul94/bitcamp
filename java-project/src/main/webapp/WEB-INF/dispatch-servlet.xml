@@ -4,13 +4,19 @@
     xmlns:p="http://www.springframework.org/schema/p"
     xmlns:context="http://www.springframework.org/schema/context"
     xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
     xsi:schemaLocation="
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- @Component, @Controller, @Service, @Repository 애노테이션이 붙은 
          클래를 찾아 인스턴스를 생성한다. 
@@ -74,6 +80,10 @@
         <property name="password" value="${jdbc.password}" />
     </bean>
     
+    
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
     <!-- 이 설정 파일에서 사용할 값이 들어 있는 
          프로퍼티 파일을 로딩하는 객체 등록 -->
     <context:property-placeholder location="classpath*:java100/app/jdbc.properties"/>
@@ -97,6 +107,20 @@
             <bean class="java100.app.web.interceptor.AuthInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
+    
+    <tx:advice id="txAdvice">
+        <tx:attributes>
+            <tx:method name="list*" read-only="true"/>
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+    
+    <aop:config>
+        <aop:pointcut id="ServiceOperation" 
+            expression="execution(* java100.app.service..*ServiceImpl.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="ServiceOperation"/>
+    </aop:config>
+
 </beans>
 
 
