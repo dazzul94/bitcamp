@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- DAO 객체를 자동으로 생성하려면,
+     namespace의 값이 인터페이스 이름과 같아야 한다. -->
+<mapper namespace="java100.app.dao.BookDao">
+
+    <resultMap type="book" id="bookMap">
+        <id column="no" property="no"/>
+        <result column="title" property="title"/>
+        <result column="publisher" property="publisher"/>
+        <result column="pubdate" property="publisedDate"/>
+        <result column="price" property="price"/>
+        <result column="desc" property="description"/>
+        
+        <!-- 첨부파일 정보를 담을 수 있도록 설정한다. -->
+        <collection property="files"  ofType="uploadFile">
+            <id     column="f_no"       property="no"/>
+            <result column="filename"   property="filename"/>
+        </collection>
+    </resultMap>
+
+<!-- 도서사진, 도서명, 출판사, 가격 -->
+    <select id="findAll" resultMap="bookMap" parameterType="map">
+        select 
+            b.title,
+            b.publisher,
+            b.price,
+            f.no as f_no,
+            f.filename
+        from ex_book as b join ex_file2 as f on b.no=f.bno
+
+        <if test="words != null">
+	        <where>
+	            <foreach collection="words" item="word">
+	                or title like '%${word}%'
+	            </foreach>
+	        </where>
+        </if>
+        
+        <!-- 정렬 조건에 따라 SQL문을 변경한다.-->
+        order by 
+        <choose>
+            <when test="orderColumn == 'regdt' and align == 'desc'">
+                regdt desc
+            </when>
+            <when test="orderColumn == 'regdt' and align == 'asc'">
+                regdt asc
+            </when>
+            <when test="orderColumn == 'vwcnt' and align == 'desc'">
+                vwcnt desc
+            </when>
+            <when test="orderColumn == 'vwcnt' and align == 'asc'">
+                vwcnt asc
+            </when>
+            <otherwise>
+                b.no desc
+            </otherwise>
+        </choose>
+        
+        <!-- 페이지징 처리 -->
+        limit #{startIndex}, #{size}
+    </select>
+    
+    <!-- 도서번호, 도서명, 출판사, 출판일, 가격, 설명, 사진 -->
+    <select id="findByNo" resultMap="bookMap" parameterType="int">
+        select 
+            b.title,
+            b.publisher,
+            b.price,
+            f.no as f_no,
+            f.filename
+        from ex_book as b join ex_file2 as f on b.no=f.bno
+        where b.no=#{value}
+    </select>
+    
+    <select id="findByNo2" resultMap="bookMap" parameterType="int">
+        select 
+		    b.no, 
+		    b.title, 
+		    b.conts, 
+		    b.regdt, 
+		    b.vwcnt, 
+		    m.no as m_no, 
+		    m.name, 
+		    m.email,
+		    f.no as f_no,
+		    f.filename
+		from 
+		    ex_board as b 
+		    join ex_memb as m on b.mno=m.no
+		    left join ex_file2 as f on b.no=f.bno
+        where b.no=#{value}
+    </select>
+    
+    <select id="countAll" resultType="int">
+        select count(*) from ex_book
+    </select>
+    
+    <!-- insert를 수행한 후 자동 증간된 PK 값을 받고 싶다면,
+         useGeneratedKeys 속성 값을 true설정 해야 한다.
+         또한 PK 컬럼과 그 PK 컬럼 값을 저정할 property 이름을 알려줘야 한다. -->
+         
+         <!-- 도서명, 출판사, 출판일, 가격, 설명, 사진 -->
+    
+    <insert id="insert" parameterType="book"
+        useGeneratedKeys="true" keyColumn="no" keyProperty="no">
+        
+        insert into ex_book(title,publisher,pubDate,price,desc)
+        values(#{title},#{publisher},#{publishedDate},#{price},#{description})
+    </insert>
+    
+    
+    <!-- 도서명, 출판사, 출판일, 가격, 설명, 사진 -->
+    <update id="update" parameterType="book">
+        update ex_book set 
+            title=#{title}, 
+            publisher=#{publisher},
+            pubDate=#{publishedDate},
+            price=#{price},
+            desc=#{description}
+            
+        where no=#{no}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from ex_book
+        where no=#{value}
+    </delete>
+    
+</mapper>  
+
+
+
+
+
+
+
+
+
