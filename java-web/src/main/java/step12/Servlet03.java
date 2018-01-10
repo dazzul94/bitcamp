@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @SuppressWarnings("serial")
-@WebServlet("/step12/Servlet01")
+@WebServlet("/step12/Servlet03")
 public class Servlet03 extends HttpServlet{
 
     @Override
