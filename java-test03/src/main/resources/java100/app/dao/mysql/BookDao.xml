@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- DAO 객체를 자동으로 생성하려면,
+     namespace의 값이 인터페이스 이름과 같아야 한다. -->
+<mapper namespace="java100.app.dao.BookDao">
+
+    <resultMap type="book" id="bookMap">
+        <id column="no" property="no"/>
+        <result column="titl" property="title"/>
+        <result column="dcrt" property="description"/>
+        <result column="pric" property="price"/>
+        <result column="pres" property="press"/>
+        <result column="pubdt" property="publishedDate"/>
+        
+        <collection property="photo"  ofType="uploadFile">
+            <id     column="f_no"       property="no"/>
+            <result column="filename"   property="filename"/>
+        </collection>
+    </resultMap>
+
+    <insert id="insert" parameterType="book" useGeneratedKeys="true" keyColumn="no" keyProperty="no">
+        insert into ex_book(titl,dcrt,pric,pres,pubdt)
+        values(#{title},#{description},#{price},#{press},#{publishedDate})
+    </insert>
+    
+     <select id="countAll" resultType="int">
+        select count(*) from ex_book
+    </select>
+    
+    <select id="findAll" resultMap="bookMap" parameterType="map">
+        select 
+            b.no,
+            b.titl,
+            b.pric,
+            b.pres,
+            f.no as f_no,
+            f.filename as filename
+        from ex_book as b join ex_file as f on f.bno=b.no
+
+        <if test="words != null">
+            <where>
+                <foreach collection="words" item="word">
+                    or titl like '%${word}%'
+                </foreach>
+            </where>
+        </if>
+        
+        <!-- 정렬 조건에 따라 SQL문을 변경한다.-->
+        order by 
+        <choose>
+            <when test="orderColumn == 'title' and align == 'desc'">
+                titl desc
+            </when>
+            <when test="orderColumn == 'title' and align == 'asc'">
+                titl asc
+            </when>
+            <when test="orderColumn == 'no' and align == 'desc'">
+                b.no desc
+            </when>
+            <when test="orderColumn == 'no' and align == 'asc'">
+                b.no asc
+            </when>
+            <otherwise>
+                b.no desc
+            </otherwise>
+        </choose>
+        
+        <!-- 페이지징 처리 -->
+        limit #{startIndex}, #{size}
+    </select>
+    
+    <select id="findByNo2" resultMap="bookMap" parameterType="int">
+        select 
+            b.no, 
+            b.titl, 
+            b.dcrt, 
+            b.pric, 
+            b.pres,
+            b.pubdt, 
+            f.no as f_no, 
+            f.filename 
+        from 
+            ex_book as b 
+            left join ex_file as f on b.no=f.bno
+        where b.no=#{value}
+    </select>
+    
+    <update id="update" parameterType="book">
+        update ex_book set 
+            titl=#{title}, 
+            pres=#{press},
+            pubdt=#{publishedDate},
+            pric=#{price},
+            dcrt=#{description}
+        where no=#{no}
+    </update>
+    
+    <delete id="delete" parameterType="int">
+        delete from ex_book
+        where no=#{value}
+    </delete>
+</mapper>  
+
+
+
+
+
+
+
+
+

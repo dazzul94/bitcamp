@@ -1,4 +1,3 @@
-<%@page import="java100.app.domain.Board"%>
 <%@ page language="java" 
     contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
@@ -8,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>게시판</title>
+<title>도서 관리</title>
 <link rel='stylesheet' href='../../node_modules/bootstrap/dist/css/bootstrap.min.css'>
 <link rel='stylesheet' href='../../css/common.css'>
 </head>
@@ -17,32 +16,30 @@
 
 <jsp:include page="../header.jsp"/>
 
-<h1>게시물 목록</h1>
+<h1>도서 목록</h1>
 
 <jsp:include page="../listToolbar.jsp"/>
 
 <table class='table table-hover'>
 <thead>
 <tr>
-<th>번호</th><th>제목</th><th>등록일</th><th>조회수</th><th>작성자</th>
+<th>번호</th><th>도서명</th><th>가격</th><th>출판사</th><th>사진</th>
 </tr>
 </thead>
 <tbody>
 
-<c:forEach items="${list}" var="board">
-    <c:set var="title" value="${fn:length(board.title) == 0 ? 
-    '(제목이 없습니다.)' : board.title}"/>
+<c:forEach items="${list}" var="book">
+    <c:set var="title" value="${fn:length(book.title) == 0 ? 
+    '(제목이 없습니다.)' : book.title}"/>
+    <c:set var="photoname" value="${book.photo.filename}"/>
         <tr>
-        <td>${board.no}</td>
-        <%--   
-        <td><a href='${board.no}'>${fn:substring(title, 0, 20)}
-        ${(fn:length(title) > 20) ? '...' : ''}</a></td>
-        --%>
-        <td><a href='${board.no}'><span class="d-inline-block text-truncate" 
+        <td>${book.no}</td>
+        <td><a href='${book.no}'><span class="d-inline-block text-truncate" 
             style="max-width: 300px;">${title}</span></a></td>
-        <td>${board.regDate}</td>
-        <td>${board.viewCount}</td>
-        <td>${board.writer.name}</td>
+        <td>${book.price}</td>
+        <td>${book.press}</td>
+        
+        <td><img src="${contextPath}/download/${photoname}" width="35" height="40" border="0"></td>
         </tr>
 </c:forEach>
 
