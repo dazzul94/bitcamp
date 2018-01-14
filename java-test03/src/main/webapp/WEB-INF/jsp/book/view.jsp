@@ -66,9 +66,8 @@
         <div class='form-group row'>
         <label for='file' class='col-sm-2 col-form-label'>사진</label>
         <div class='col-sm-10'>
-        <img src="${contextPath}/download/${photoname}" width="350" height="400" border="0">
-        <input class='form-control' id='file' type='file' name="file"
-        value="${book.photo} }">
+        <img src="${contextPath}/download/${photoname}" width="330" height="400" border="0">
+        <input class='form-control' id='file' type='file' name="file" value="${book.photo} }">
         </div>
         </div>
         

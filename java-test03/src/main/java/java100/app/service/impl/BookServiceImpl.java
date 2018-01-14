@@ -74,11 +74,13 @@ public class BookServiceImpl implements BookService {
 
         int count = bookDao.update(book);
 
+        if (book.getPhoto() != null) {
         // 기존의 게시물 첨부파일은 모두 지운다.
         fileDao.deleteAllByBookNo(book.getNo());
 
         // 다시 게시물 첨부파일을 저장한다.
         addFiles(book.getPhoto(), book.getNo());
+        }
         return count;
     }
 

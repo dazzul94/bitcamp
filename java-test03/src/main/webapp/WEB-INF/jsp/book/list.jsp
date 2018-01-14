@@ -39,7 +39,7 @@
         <td>${book.price}</td>
         <td>${book.press}</td>
         
-        <td><img src="${contextPath}/download/${photoname}" width="35" height="40" border="0"></td>
+        <td><img src="${contextPath}/download/${photoname}" width="33" height="40" border="0"></td>
         </tr>
 </c:forEach>
 
