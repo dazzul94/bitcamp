@@ -59,36 +59,37 @@ public class ScoreController {
     }
     
     @RequestMapping("{no}")
-    public String view(@PathVariable int no, Model model) throws Exception {
-        
-        model.addAttribute("score", scoreService.get(no));
-        return "score/view";        
-    }
-
-    @RequestMapping("form")
-    public String form() throws Exception {
-        return "score/form";
+    public Object view(@PathVariable int no, Model model) throws Exception {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("data", scoreService.get(no));
+        return result;        
     }
 
     @RequestMapping("add")
-    public String add(Score score) throws Exception {
+    public Object add(Score score) throws Exception {
         
         scoreService.add(score);
-        return "redirect:list";
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("status", "success");
+        return result;
     }
     
     @RequestMapping("update")
-    public String update(Score score) throws Exception {
+    public Object update(Score score) throws Exception {
         
         scoreService.update(score);
-        return "redirect:list";
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("status", "success");
+        return result;
     }
 
     @RequestMapping("delete")
-    public String delete(int no) throws Exception {
+    public Object delete(int no) throws Exception {
         
         scoreService.delete(no);
-        return "redirect:list";
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("status", "success");
+        return result;
     }
 }
 
