@@ -82,6 +82,8 @@ public class BoardController {
         
     }
     
+    // XML 설정으로 트랜잭션을 조정한다면 @Transactional 애노테이션은 필요없다.
+    //@Transactional
     @RequestMapping("add")
     public String add(
             Board board,
@@ -108,8 +110,10 @@ public class BoardController {
         // Board 객체에 저장한 파일명을 등록한다. 
         board.setFiles(uploadFiles);
 
+        // 게시글 작성자는 로그인 사용자이다. 
         board.setWriter(loginUser);
         
+        // 게시글 등록
         boardService.add(board);
         
         return "redirect:list";
@@ -140,10 +144,6 @@ public class BoardController {
         // Board 객체에 저장한 파일명을 등록한다. 
         board.setFiles(uploadFiles);
 
-        Member writer = new Member();
-        writer.setNo(12);
-        writer.setName("임꺽정");
-        
         boardService.update(board);
         
         return "redirect:list";

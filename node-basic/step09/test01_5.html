@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HTML</title>
+</head>
+<body>
+	<button id="btn">비동기요청</button>
+	<br>
+	<script>
+        var btn = window.document.querySelector('#btn');
+        btn.onclick = function() {
+
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState < 4) return;
+                if (xhr.status != 200) {
+                    console.log('서버 실행 오류!');
+                    return;
+                }
+                console.log(xhr.readyState);
+            };
+            xhr.open('GET', 'http://localhost:8888/okok', true);
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
+
+
+
+

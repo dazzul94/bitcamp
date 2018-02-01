@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HTML</title>
+</head>
+<body>
+	<button id="btn">동기요청</button>
+	<br>
+	<script>
+        var btn = window.document.querySelector('#btn');
+        btn.onclick = function() {
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://localhost:8888/okok', false);
+            xhr.send();
+            console.log(xhr.responseText);
+
+        }
+    </script>
+</body>
+</html>
+
+
+
+
