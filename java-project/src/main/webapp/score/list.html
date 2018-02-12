@@ -42,7 +42,7 @@ d<a href="/app/auth/logout"
 </header>
 
 
-<h1>성적 목록</h1>
+<h1>성적 목록 powered by handlebars</h1>
 
 <nav class="navbar navbar-light justify-content-between">
   <a href='form.html' class='btn btn-primary btn-sm'>추가</a>
@@ -83,11 +83,27 @@ d<a href="/app/auth/logout"
 </footer>
 </div>
 
+<!-- 변하지 않는 템플릿 -->
+<script id="template1" type="text/x-handlebars-template">
+{{#each list}}
+<tr>
+    <td>{{no}}</td>
+    <td><a href="form.html?no={{no}}"></a>{{name}}</td>
+    <td>{{sum}}</td>
+    <td>{{aver}}</td>
+</tr>
+{{/each}}
+</script>
+
+<script src='../node_modules/handlebars/dist/handlebars.min.js'></script>
 <script src='../node_modules/jquery/dist/jquery.slim.min.js'></script>
 <script src='../node_modules/popper.js/dist/umd/popper.min.js'></script>
 <script src='../node_modules/bootstrap/dist/js/bootstrap.min.js'></script>
 <script src='../node_modules/jquery/dist/jquery.min.js'></script>
 <!-- <script src='../js/bit.js'></script> -->
+
+
+
 
 <script type="text/javascript">
 var words = $('#words'),
@@ -96,7 +112,9 @@ var words = $('#words'),
     currBtn = $('#currBtn'),
     nextBtn = $('#nextBtn'),
     tbody = $('#list > tbody'), 
-    currPageNo = 1;
+    currPageNo = 1,
+    template1Src = $('#template1').html(),
+    template1Engine = Handlebars.compile(template1Src);
 // 서버에서 목록 데이터를 가져온다.
 load(1);
 
@@ -122,17 +140,7 @@ function load(pageNo, options) {
         dataType: 'json',
         success: (result) => {
             
-            tbody.html("");
-            
-            for (var data of result.list) {
-                $('<tr>')
-                    .html(
-	                "<td>" + data.no + "</td>" + 
-	                "<td><a href='form.html?no=" + data.no + "'>" + data.name + "</a></td>" + 
-	                "<td>" + data.sum + "</td>" +
-                    "<td>" + data.aver + "</td>")
-                    .appendTo(tbody);
-	        }
+            tbody.html(template1Engine(result));
             
             currPageNo = result.pageNo;
             currBtn.html(currPageNo);
