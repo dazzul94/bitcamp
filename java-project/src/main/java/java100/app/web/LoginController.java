@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.client.RestTemplate;
 
 import java100.app.domain.Member;
+import java100.app.service.FacebookService;
 import java100.app.service.MemberService;
 
 @Controller
@@ -25,6 +25,7 @@ public class LoginController {
 
     @Autowired
     MemberService memberService;
+    FacebookService facebookService;
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String form(Model model) {
@@ -59,17 +60,13 @@ public class LoginController {
     }
 
     @RequestMapping(value = "facebookLogin")
-    public String facebookLogin(String accessToken, HttpSession httpSession, HttpServletResponse response, // 쿠키 정보를 초기화
+    public String facebookLogin(String accessToken, HttpSession httpSession, 
+            HttpServletResponse response, // 쿠키 정보를 초기화
             Model model) {
-        
-            System.out.println(accessToken);
-            RestTemplate restTemplate = new RestTemplate(); // 페이스북 서버한테 요청
+
         try {
             @SuppressWarnings("rawtypes")
-            Map result = restTemplate.getForObject(
-                    // Map에 담는다면 v1, v2를 찾아가고 배열이라면 그냥 순서대로 넣어준다
-                    "https://graph.facebook.com/v2.12/me?access_token={v1}&fields={v2}", Map.class, // return type
-                    accessToken, "id,name,email,gender,devices");
+            Map result = facebookService.me(accessToken, Map.class);
             
             Member member = memberService.get((String)result.get("email"));
             if(member == null) {
@@ -82,7 +79,7 @@ public class LoginController {
             model.addAttribute("loginUser", member);
             return "redirect:../score/list";
         } catch (Exception e) {
-            return "redirect:auth/loginfail";
+            return "auth/loginfail";
         }
         // 이제 가입된 이메일이 있느지 확인하고 없다면 자동 로그인,
         // 그리고 httpSession에 추가
