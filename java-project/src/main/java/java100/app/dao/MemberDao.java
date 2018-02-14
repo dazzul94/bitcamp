@@ -13,6 +13,7 @@ public interface MemberDao {
     int insert(Member member);
     int update(Member member);
     int delete(int no);
+    Member findByEmail(String email);
 }
 
 

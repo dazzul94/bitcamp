@@ -85,11 +85,19 @@
         where email=#{email} and pwd=password(#{password})
     </select>
     
+    <select id="findByEmail" 
+            resultMap="memberMap" parameterType="string">
+        <include refid="select1"/>
+        from ex_memb
+        where email=#{email}
+    </select>
+    
     <select id="countAll" resultType="int">
         select count(*) from ex_memb
     </select>
-    
-    <insert id="insert" parameterType="member">
+    <!-- 인서트 할때 no를 받고싶다 -->
+    <insert id="insert" parameterType="member"
+        useGeneratedKeys="true" keyColumn="no" keyProperty="no">
         insert into ex_memb(name,email,pwd,regdt)
         values(#{name},#{email},password(#{password}),now())
     </insert>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>페이스북 로그인</title>
+</head>
+<body>
+<script id="s1" type="text/javascript"></script>
+<script id="s2" type="text/javascript"></script>
+<script id="s3" type="text/javascript"></script>
+<script id="s4" type="text/javascript"></script>
+<script type="text/javascript">
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];  //script 태그 0번째를 찾는다.
+    if (d.getElementById(id)) return;    //값이 한개라도 있으면 true를 리턴한다.
+    js = d.createElement(s); js.id = id; //script 태그를 하나 만들고 js의 id속성에 파라미터로 받은 id를 넣는다
+    js.src = "https://connect.facebook.net/en_US/sdk.js"; //src속성에 이거 넣는다.
+    fjs.parentNode.insertBefore(js, fjs); //부모는 body  첫 스크립트 태그 전에 넣는다 (맨처음 script가 된다)=>개발자도구의 elemnet 확인하면 있다
+  }(document, 'script', 'facebook-jssdk'));
+
+//plus는 함수이자 함수주소 자체다 그래서 ok에 넣을수 있따
+var ok = plus;
+ok(10,20);
+
+
+plus(10,20);
+function plus(a,b) {
+console.log(a +b);
+}
+
+//함수 plus를 ok에 넣는다 함수를 한번만 쓸때 다만, 괄호를 써준다
+
+(function plus(a,b) {
+console.log(a +b);
+})(10,20);
+
+(function plus(a,b) {
+console.log(a +b);
+}(10,20)); //뒤에 괄호 쳐도된다
+
+
+  </script>
+
+</body>
+</html>

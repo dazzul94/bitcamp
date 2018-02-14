@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>페이스북 로그인</title>
+</head>
+<body>
+<h1>페이스북</h1>
+
+<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>
+
+<script type="text/javascript">
+function checkLoginState() {
+    console.log('로그인 버튼 눌렀음')
+}
+
+//페이스북 자바스크립트 sdk 파일을 가져온 후에 호출할 함수를 등록한다(선언). 함수를 등록하는 것이지 호출하는 것이 아니다.
+window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '153676722101638',
+      cookie     : true,  // enable cookies to allow the server to access 
+                          // the session
+      xfbml      : true,  // parse social plugins on this page
+      version    : 'v2.8' // use graph api version 2.8
+    });
+  };
+  
+  
+//sdk를 로드하는건 페이스북 라이브러리를 로드하는것? =>개발자 도구 source 보면 된다 거기에 페이스북 관련 함수가 다 들어있다
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];  //script 태그 0번째를 찾는다.
+    if (d.getElementById(id)) return;    //값이 한개라도 있으면 true를 리턴한다.
+    js = d.createElement(s); js.id = id; //script 태그를 하나 만들고 js의 id속성에 파라미터로 받은 id를 넣는다
+    js.src = "https://connect.facebook.net/en_US/sdk.js"; //src속성에 이거 넣는다.
+    fjs.parentNode.insertBefore(js, fjs); //부모는 body  첫 스크립트 태그 전에 넣는다 (맨처음 script가 된다)=>개발자도구의 elemnet 확인하면 있다
+  }(document, 'script', 'facebook-jssdk'));
+
+  </script>
+
+</body>
+</html>

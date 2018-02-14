@@ -22,6 +22,7 @@ public interface MemberService {
     int add(Member score);
     int update(Member score);
     int delete(int no);
+    Member get(String email);
 }
 
 
