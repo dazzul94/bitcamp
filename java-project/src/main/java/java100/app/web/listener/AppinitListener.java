@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebListener;
 
 // 웹 애플리케이션이 시작될 때 준비 작업을 수행한다.
 @WebListener
-public class AppInitListener implements ServletContextListener {
+public class AppinitListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
