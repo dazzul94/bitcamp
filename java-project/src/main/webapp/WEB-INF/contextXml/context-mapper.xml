@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+          
+        <!-- MapperScannerConfigurer를 사용할 경우,
+             SQL 맵퍼 파일이 인터페이스와 같은 패키지에 있다면,
+             맵퍼 파일의 위치를 따로 설정하지 않아도 된다.
+             그러나 SQL 맵퍼 파일이 다른 패키지에 있다면,
+             반드시 설정해야 한다. -->
+        <property name="mapperLocations" value="classpath*:java100/app/dao/mysql/*Dao.xml"/>
+        
+        <property name="typeAliasesPackage" value="java100.app.domain"/> 
+    </bean>    
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+      <property name="basePackage" value="java100.app.dao" />
+    </bean>
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

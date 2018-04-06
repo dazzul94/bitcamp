@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <aop:config>
+    
+        <!-- 트랜잭션 advice를 적용할 대상을 지정한다. -->
+	    <aop:pointcut id="serviceOperation" 
+	        expression="execution(* java100.app.service..*ServiceImpl.*(..))"/>
+	    
+	    <!-- 위에서 선언한 트랜잭션 advice를 pointcut에 연결한다. -->    
+	    <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation"/>
+	    
+	</aop:config>
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
